@@ -14,7 +14,7 @@ const authRoute = require('./Routes/AuthRoute');
 
 const port = process.env.PORT || 5000
 
-const router = require('./router');
+// const router = require('./router');
 const uri = process.env.ATLAS_URI
 mongoose.connect('mongodb+srv://Exploits:Exploits4444@cluster0.vtnwl.gcp.mongodb.net/Exploits?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
 const db = mongoose.connection
@@ -22,6 +22,7 @@ const db = mongoose.connection
 db.on('error', (err) => {
   console.log(err)
 })
+
 
 db.once('open', () =>{
   console.log('Database connection Established')
