@@ -164,7 +164,7 @@ submit = (ev) => {
                 {/* <img  */}
                 <label><h6>Profile Picture</h6></label>
                 
-                  <input type='file' onChange={this.filer} capture accept="image/*" />
+                  <input type='file' onChange={this.filer} accept="image/*" />
                   
                   <br/>
                   <br/>

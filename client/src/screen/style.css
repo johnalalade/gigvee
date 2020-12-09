@@ -171,6 +171,10 @@ a.current {
 }
 
 @media (max-width: 576px) {
+    .log-con{
+        padding-top: 10px;
+       
+    }
     .searchbox{
         width: 200px;
         border-radius: 20px;

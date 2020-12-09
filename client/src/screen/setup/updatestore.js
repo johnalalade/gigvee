@@ -207,7 +207,7 @@ handleLocationError(error) {
 }
 
 reverseGeocodeCoordinates(position) {
-  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.location.latitude},${this.state.location.longitude}&sensor=fals&key=AIzaSyDSTTGy28qjqJ5woegTBYAroJeL0zE6t4g`)
+  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.location.latitude},${this.state.location.longitude}&sensor=false&key=AIzaSyDSTTGy28qjqJ5woegTBYAroJeL0zE6t4g`)
   .then(result => {
     // console.log(this.state.location.latitude);
     this.setState({
@@ -239,7 +239,7 @@ reverseGeocodeCoordinates(position) {
               <label><h6>Logo</h6></label>
               <br/>
               
-              <input type='file' onChange={this.filer} capture accept="image/*" /> 
+              <input type='file' onChange={this.filer} accept="image/*" /> 
                   <br/>
                   <br/>
               

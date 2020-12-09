@@ -4,7 +4,7 @@
     background-color: rgba(255, 0,0, 0.2);
 }
 .setup-div {
-    background-color: orangered;
+    background-color: rgba(255, 69, 0, 0.8);
 }
 .abo{
     display: flex;
@@ -37,7 +37,7 @@
 } */
 /* profile */
 .profile-div {
-    background-color: orangered;
+    background-color: rgba(255, 69, 0, 0.5);
 }
 /* bookmark */
 .media-div {
@@ -66,7 +66,7 @@
 }
 /* store setup */
 .store-div {
-    background-color: orangered;
+    background-color: rgba(255, 69, 0, 0.5);
     
 }
 .store{
@@ -81,7 +81,7 @@
         
     }
     .store-div {
-        background-color: orangered;
+        background-color: rgba(255, 69, 0, 0.5);
         height: 200vh;
     }
     .spinner {

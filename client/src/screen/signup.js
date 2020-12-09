@@ -104,7 +104,7 @@ submit = (ev) => {
             <div>
             <img src={Logo} className="img" alt="logo" />
             <h1 className="text">Welcome To GigVee,</h1>
-            <p className="lead text">making a difference in people..,</p>
+            <p className="lead text">making a difference in people...</p>
             </div>
           </Col>
           <Col md="6">

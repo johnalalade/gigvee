@@ -258,7 +258,7 @@ reverseGeocodeCoordinates(position) {
               <br/>
              
 
-              <input type='file' onChange={this.filer} capture accept="image/*" /> 
+              <input type='file' onChange={this.filer} accept="image/*" /> 
                   <br/>
                   <br/>
               <h3 className="err">{this.state.err}</h3>

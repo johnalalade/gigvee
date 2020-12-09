@@ -123,7 +123,7 @@ datefilter = (k) => {
               <div className="card-bg">
                  <div className="img-card">
                    {this.state.store.image &&
-                  <img width="100%" src={`/${this.state.store.image}`} className="setupimg" alt="prod" /> || <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon>
+                  <img width="100%" src={`/${this.state.store.image}`} className="setupimg" alt="store image" /> || <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon>
                   }
                   </div>
                   <div className="lists">
@@ -145,8 +145,8 @@ datefilter = (k) => {
               </div>
               <br/>
 
-            <h4>Your  Products: </h4>
-                    <h5>Products will be deleted after 30 days</h5>
+            <h6>Your  Products: </h6>
+                    <p>Products will be deleted after 30 days</p>
                   {this.state.products && 
                 this.state.products.map((product) => 
                   <Cards key={product._id} storeName={product.storename} productName={product.productName} img={`/${product.image}`} productDescription={product.productDescription} deta={deta} id={product._id} />

@@ -231,7 +231,7 @@ render() {
         <label><h6>Image</h6></label>
         <br/>
        
-        <input type='file' onChange={this.filer} capture accept="image/*" />
+        <input type='file' onChange={this.filer} accept="image/*" />
                   
                   <br/>
                   <br/>
