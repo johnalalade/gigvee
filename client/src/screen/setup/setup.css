@@ -1,0 +1,109 @@
+.err {
+    color: red;
+    opacity: 0.9;
+    background-color: rgba(255, 0,0, 0.2);
+}
+.setup-div {
+    background-color: orangered;
+}
+.abo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.img-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.setupimg {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+.lists {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.card-list {
+    padding: 1.5em;
+    border-bottom: 0.7px solid black;
+    
+}
+/* .update-store {
+    color: blue
+} */
+/* profile */
+.profile-div {
+    background-color: orangered;
+}
+/* bookmark */
+.media-div {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: center; */
+    border-bottom: 0.7px solid black;
+}
+.book-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px;
+}
+.book-div {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+/* about */
+.quote {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+/* store setup */
+.store-div {
+    background-color: orangered;
+    
+}
+.store{
+    background-color: rgba(255, 69, 0, 0.5);
+    
+}
+@media (min-width: 768px) {
+    .store{
+        background-color: rgba(255, 69, 0, 0.5);
+        padding-left: 250px;
+        padding-bottom: 10px;
+        
+    }
+    .store-div {
+        background-color: orangered;
+        height: 200vh;
+    }
+    .spinner {
+   margin: 350px;
+   margin-left: 2000px;
+    }
+}
+.spinner {
+    margin: 200px;
+   
+     }
+.spin{
+     display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+/* add stock */
+.addstock-div {
+    background-color: rgba(255, 69, 0, 0.5);
+    
+}
+.privacy  {
+    padding-left: 5px;
+    padding-right: 5px;
+}
