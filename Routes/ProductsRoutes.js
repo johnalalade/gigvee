@@ -8,7 +8,7 @@ const validation = require('../Middleware/validation.js')
 
 ProductsRouter.post('/products/search', ProductsController.searchProducts)
 ProductsRouter.post('/products/myproducts', ProductsController.myProducts)
-ProductsRouter.get('/products', ProductsController.indexProducts)
+ProductsRouter.get('/products/all', ProductsController.indexProducts)
 ProductsRouter.post('/products/showone', ProductsController.showProduct)
 ProductsRouter.post('/products/addone',uploadMulter,validation,ProductsController.addProduct)
 ProductsRouter.post('/products/updateone',uploadMulter,validation,ProductsController.updateProduct)

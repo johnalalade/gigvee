@@ -183,7 +183,7 @@ customSort = (a,b) => {
     this.getLocation()
 
     
-    axios.get('/products')
+    axios.get('/products/all')
     
     .then((data) => {
       console.log(data)
