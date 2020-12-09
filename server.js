@@ -33,7 +33,7 @@ const server = http.createServer(app);
 
 
 app.use(cors());
-app.use(router);
+// app.use(router);
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended: true}))
