@@ -186,7 +186,7 @@ customSort = (a,b) => {
     axios.post('/products')
     
     .then((data) => {
-      console.log(data)
+      //console.log(data)
       data.data.response.forEach(this.distancer)
       return data.data.response})
     .then(ans => ans.map(this.dateChecker))
