@@ -12,6 +12,7 @@ const storeRoute = require('./Routes/StoreRoutes');
 const productsRoute = require('./Routes/ProductsRoutes');
 const authRoute = require('./Routes/AuthRoute');
 
+const port = process.env.PORT || 5000
 
 const router = require('./router');
 const uri = process.env.ATLAS_URI
@@ -49,7 +50,7 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 
-server.listen(process.env.PORT || 5000, () => console.log(`Server has started.on port ${process.env.PORT}$`));
+server.listen(port, () => console.log(`Server has started.on port ${port}$`));
 
 // app.use('/', profileRoute)
 app.use('/', storeRoute)
