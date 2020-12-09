@@ -6,9 +6,9 @@ import './style.css';
 // import '/Users/user/Desktop/bro AY/exploits/backend/uploads';
 
 import { Spinner} from 'reactstrap';
-import CardFooter from 'reactstrap/lib/CardFooter';
-import Row from 'reactstrap/lib/Row';
-import Col from 'reactstrap/lib/Col';
+// import CardFooter from 'reactstrap/lib/CardFooter';
+// import Row from 'reactstrap/lib/Row';
+// import Col from 'reactstrap/lib/Col';
 
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,9 +20,13 @@ import { faSearch, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Placeholder = () => {
   return(
-    <div className="search-holder">
+    <div>
+      <br/>
+      <br/>
+      
       <FontAwesomeIcon icon={faSearch} className="search-wait"></FontAwesomeIcon>
-    </div>
+      
+      </div>
   )
 }
 
@@ -252,7 +256,8 @@ customSort = (a,b) => {
         </form>
       </div>
       </div>
-      {this.state.found === null && <Placeholder /> || this.state.found === "searching" && <div className="spin"><Spinner className="spinner" color="primary" size="lg"/> </div> || this.state.found === "done" &&
+      {this.state.found === null && <div className="search-holder">
+        <Placeholder /></div> || this.state.found === "searching" && <div className="spin"><Spinner className="spinner" color="primary" size="lg"/> </div> || this.state.found === "done" &&
       //  <Row className="mx-md-5">
       //   <Col>
      
