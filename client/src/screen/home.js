@@ -178,9 +178,9 @@ customSort = (a,b) => {
   if(a.distance < b.distance) return -1;
   return 0;
 }
-  componentDidMount (){
+  componentDidMount() {
     
-    this.getLocation()
+   this.getLocation()
 
     
     axios.post('/products')

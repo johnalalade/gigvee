@@ -59,7 +59,7 @@ const [info1, setInfo1] = useState(false)
           {/* one */}
           <Marker icon={{
             url: "/blue.png",
-            scaledSize: new window.google.maps.Size(60,60),
+            scaledSize: new window.google.maps.Size(50,50),
             origin: new window.google.maps.Point(0,0),
             anchor: new window.google.maps.Point(30,52)
           }} 
@@ -192,6 +192,8 @@ const Cards = (prop, {location}) => {
                  lng={prop.lng2}
                  address={prop.address}/>
           </div>
+          <p>Red icon: shows store location</p>
+          <p>Blue icon(from pngtree): shows your location.</p>
           <ToastContainer />
          </div>
          <br></br>
