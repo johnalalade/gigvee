@@ -123,7 +123,7 @@ datefilter = (k) => {
               <div className="card-bg">
                  <div className="img-card">
                    {this.state.store.image &&
-                  <img width="100%" src={`/${this.state.store.image}`} className="setupimg" alt="store image" /> || <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon>
+                  <img src={`/${this.state.store.image}`} className="setupimg" alt="store image" /> || <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon>
                   }
                   </div>
                   <div className="lists">
