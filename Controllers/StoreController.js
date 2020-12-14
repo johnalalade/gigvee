@@ -90,6 +90,29 @@ const addStore = (req, res, next) => {
 }
 
 // update store
+const dateStore = (req, res, next) => {
+    let storeID = req.body.storeID
+
+    let updatedStore = {
+        sub: 2,
+        subDate: req.body.subDate
+    }
+
+    StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
+    .then(() => {
+        res.json({
+            message: "Profile Updated Successfully"
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: "An Error Occured"+ error
+        })
+    })
+
+}
+
+// update store
 const updateStore = (req, res, next) => {
 
     let storeID = req.body.storeID
@@ -104,8 +127,7 @@ const updateStore = (req, res, next) => {
                    address: req.body.address},
         email: req.body.email,
         phone: req.body.phone,
-        sub: 2,
-        subDate: req.body.subDate
+        
     }
     if(req.file){
         updatedStore.image = req.file.path
