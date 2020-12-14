@@ -65,6 +65,8 @@ const addStore = (req, res, next) => {
                    address: req.body.address},
         email: req.body.email,
         phone: req.body.phone,
+        sub: 2,
+        subDate: Date.now()
 
     })
     if(req.file){
@@ -102,6 +104,8 @@ const updateStore = (req, res, next) => {
                    address: req.body.address},
         email: req.body.email,
         phone: req.body.phone,
+        sub: 2,
+        subDate: req.body.subDate
     }
     if(req.file){
         updatedStore.image = req.file.path
