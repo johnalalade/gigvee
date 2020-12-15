@@ -131,7 +131,7 @@ submit = (ev) => {
   }
 
   else{
-    axios.get(`/sign-s3?file-name=${this.state.img.name}&file-type=${this.state.img.type}`)
+    axios.post(`/sign-s3?file-name=${this.state.img.name}&file-type=${this.state.img.type}`)
   .then((res) => {
     console.log(res)
     const response = res
