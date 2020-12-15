@@ -104,10 +104,10 @@ click = (ev) => {
 submit = (ev) => {
   ev.preventDefault();
   let data = new FormData()
-  if(this.state.img){
-    data.append('categoryImage', this.state.img)
-    data.append('filename', this.state.img.name)
-  }
+  // if(this.state.img){
+  //   data.append('categoryImage', this.state.img)
+  //   data.append('filename', this.state.img.name)
+  // }
   data.append('userID', this.props.match.params.id)
   data.append('firstname', this.state.firstName)
   data.append('lastname', this.state.lastName)
@@ -129,20 +129,26 @@ submit = (ev) => {
     this.setState({err: 'Please All Fields Are Required'})
     return false
   }
-   
-  else{
-   axios.post('/profiles/updateone', data, {
-    onUploadProgress: ProgressEvent => {
-      this.setState({
-        loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
-      })
-    }
-  })
-.then((res) =>{if(res.data.error){return};this.props.history.replace(`/setup/${this.props.match.params.id}`)})
-.then((res) => {toast.success('Update Successful')})
 
-.catch(err => {toast.error('Update Failed, Please Try Again. Try adding  an image'+ err)})
-   return true
+  else{
+    axios.get(`/sign-s3?file-name=${this.state.img.name}&file-type=${this.state.img.type}`)
+  .then((res) => {
+    console.log(res)
+    const response = res
+  })
+
+//    axios.post('/profiles/updateone', data, {
+//     onUploadProgress: ProgressEvent => {
+//       this.setState({
+//         loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
+//       })
+//     }
+//   })
+// .then((res) =>{if(res.data.error){return};this.props.history.replace(`/setup/${this.props.match.params.id}`)})
+// .then((res) => {toast.success('Update Successful')})
+
+// .catch(err => {toast.error('Update Failed, Please Try Again. Try adding  an image'+ err)})
+//    return true
   } 
  
 }

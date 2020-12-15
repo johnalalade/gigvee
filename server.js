@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const cors = require('cors');
 const path = require('path');
+const aws = require('aws-sdk');
 
 // const profileRoute = require('./Routes/userProfileRoutes');
 const storeRoute = require('./Routes/StoreRoutes');
@@ -57,3 +58,35 @@ server.listen(port, () => console.log(`Server has started.on port ${port}$`));
 app.use('/', storeRoute)
 app.use('/', productsRoute)
 app.use('/', authRoute)
+
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = 'us-east-2'
+
+app.get('/sign-s3', (req, res) => {
+  const s3 = new aws.S3();
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 180,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+    res.json({
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    });
+   // res.end();
+  });
+});
