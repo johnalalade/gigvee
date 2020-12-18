@@ -144,11 +144,13 @@ submit = (ev) => {
       <div className="container-fluid">
                
               <h1 align="center">About GigVee</h1>
+              <div className="about-logo">
               <img src={Logo} className="img-abo" align="center" alt="logo" />
               <br/>
               <div>
-                <h4>GigVee</h4>
-                <p className="lead">making a difference in people...</p>
+                <h4 align="center">GigVee</h4>
+                <p className="lead" align="center" >making a difference in people...</p>
+              </div>
               </div>
               <div>
                 <p>

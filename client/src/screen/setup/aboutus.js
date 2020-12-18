@@ -16,13 +16,13 @@ class AboutUs extends Component {
                <br/><br/>
                <br/><br/>
               <h1 align="center">About GigVee</h1>
-              <div>
-                <div className="abo">
+              <div className="about-logo">
               <img src={Logo} className="img-abo" align="center" alt="logo" />
-              </div>
               <br/>
-                <h4>GigVee</h4>
-                <p className="lead">making a difference in people...</p>
+              <div>
+                <h4 align="center">GigVee</h4>
+                <p className="lead" align="center" >making a difference in people...</p>
+              </div>
               </div>
               <div>
                 <p>

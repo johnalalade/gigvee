@@ -58,6 +58,12 @@
     flex-direction: row;
     justify-content: center;
 }
+.about-logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .img-abo {
     border-radius: 50%;
     height: 80px;

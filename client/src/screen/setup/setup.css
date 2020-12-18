@@ -6,10 +6,21 @@
 .setup-div {
     background-color: rgba(255, 69, 0, 0.8);
 }
-.abo{
+.abo {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+.about-logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.img-abo {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
 }
 .img-card {
     display: flex;
