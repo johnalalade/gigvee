@@ -70,6 +70,7 @@ class Notifications extends Component {
            </a>
             </div>
             <br></br>
+            <br></br>
         <ToastContainer />
         </div>
       <Footer id={this.props.match.params.id} />

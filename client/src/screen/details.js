@@ -355,10 +355,10 @@ handleLocationError(error) {
                           dis={this.state.product.distance}
                           phone={this.state.product.phone} 
                           email={this.state.product.email} 
-                          message={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted. 
-                          
-                          Product name: ${this.state.product.productName}
-                          Description: ${this.state.product.productDescription}`}
+                          message={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
+                          Product Name: ${this.state.product.productName}
+                          Description: ${this.state.product.productDescription}
+                          `}
                           comments={this.state.product.comments} 
                           id={this.state.product.id} 
                          lat2={this.state.product.location.latitude}
