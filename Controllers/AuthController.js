@@ -137,87 +137,33 @@ const storeProfile = (req, res, next) => {
     })
 }
 
-const updateProfile = async (req, res, next) => {
+const updateProfile = (req, res, next) => {
 
     let userID = req.body.userID
 
     let updatedProfile = { 
-        bookmarks: []
+        src: req.body.src,
+        bookmarks: [],
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        phone: req.body.phone,
     }
-    if(req.body.firstname){
-        updatedProfile.firstname = req.body.firstname 
-    }
-    if(req.body.lastname){
-        updatedProfile.lastname = req.body.lastname 
-    }
-    if(req.body.email){
-        updatedProfile.email = req.body.email 
-    }
-    if(req.body.phone){
-        updatedProfile.phone = req.body.phone 
-    }
-    if(req.body.password){
-        updatedProfile.password = req.body.password 
-    }
-    if(req.body.bookmark){
-        updatedProfile.bookmarks = updatedProfile.bookmarks.push(req.body.bookmark) 
-    }
-    if(req.body.notification){
-        updatedProfile.notifications = updatedProfile.notifications.unShift(req.body.notification) 
-    }
-     if(req.file){
-          updatedProfile.image = req.file.path
-      }
-    if(req.body.filename){
-        updatedProfile.filename = req.body.filename 
-    }
-
-      //saveImage(updatedProfile, req.body.files)
-    Login.findById(userID)
-    .then(response => {
-        fs.unlink(`${response.image}`,(err) => {
-            if(err) console.log(err)
-            else console.log('file deleted')
-        })
-    })
+    Login.findByIdAndUpdate(userID, {$set: updatedProfile})
     .then(() => {
-        Login.findByIdAndUpdate(userID, {$set: updatedProfile})
-        .then((datab) => {
-            res.json({
-                datab,
-                message: "Profile Updated Successfully"
-            })
-        })
-        .catch(error => {
-            console.log(error)
-            res.json({
-                error,
-                message: "An Error Occured"
-            })
-        })
-  
-    })
-    .catch(err => {
         res.json({
-            message: "Minor Error Occured"
+            message: "Profile Updated Successfully"
         })
     })
-      
-      
-    
+    .catch(error => {
+        res.json({
+            message: "An Error Occured"
+        })
+    })
+     
 }
         
     
-   
-// function saveImage(Profile, img ) {
-//     if(img == null) return
-//     const cover = img
-//     const imagesMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
-//     if (cover != null && imagesMimeTypes.includes(cover.type)){
-//         Profile.image = new Buffer.from(cover.data, 'base64')
-//         Profile.imageType = cover.type
-//     }
-// }
 
 module.exports = {
     register, login, showOne, storeProfile, updateProfile, indexProfile

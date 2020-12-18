@@ -3,13 +3,8 @@ const Schema = mongoose.Schema;
 //const imageBasePath = 'uploads/'
 
 const loginSchema = new Schema({
-    image: {
-        type: String,
-        trim: true
-    },
-    filename: {
-        type: String,
-        trim: true
+    src: {
+        type: String
     },
     firstname:{
         type: String,

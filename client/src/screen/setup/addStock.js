@@ -8,7 +8,7 @@ import {Form, Container, Progress} from 'reactstrap';
 import axios from 'axios';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { faGift } from '@fortawesome/free-solid-svg-icons';
+import { faGift, faGifts } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Import React FilePond
@@ -35,7 +35,9 @@ class AddStock extends Component {
     constructor(props) {
     super(props);
     this.state = {
-      
+      src: null,
+      checker: null,
+      checkerImg: null,
       storename: '',
       stockName: "",
       stockDescription: "",
@@ -64,6 +66,7 @@ componentDidMount(){
   axios.post('/store/showone', user)
  
   .then((data)=> { this.setState({
+    
     storename: data.data.response.storename,
     storetype: data.data.response.storeType,
     phone: data.data.response.phone,
@@ -87,27 +90,50 @@ storeDescription = (ev) => {
 }
 filer = (ev) => {
   //console.log(ev.target)
+  this.setState({
+    checkerImg: "loading"
+  })
+  toast.info("Loading,please wait for preview before clicking update button...")
   let file = ev.target.files[0]
   if(file.size > 5000 * 5000 * 5) {
     this.setState({err: "Image Size Too Large"})
-  } else {
+  } else{
     this.setState({
-      stockImg: ev.target.files[0]
+      img: ev.target.files[0]
     })
+    this.setState({checker: true})
+   setTimeout(() => {
+    const uploadFile = (file, signedRequest, url) => {
+      axios.put(signedRequest, file)
+      .then(() => this.setState({
+        src: url,
+        checkerImg: true
+      }))
+      .catch(() => toast.error('could not upload image, please try again'))
+      
+    }
+    axios.post(`/sign-s3?file-name=${this.state.img.name}&file-type=${this.state.img.type}`)
+  .then((res) => {
+    //console.log(res)
+    const response = res.data
+  uploadFile(this.state.img, response.signedRequest, response.url);
+  })
+   }, 2000)
   }
-  
 }
+
 click = (ev) => {
   ev.preventDefault()
 }
 submit = (ev) => {
   ev.preventDefault();
-  toast.success('Loading,  please wait');
+  toast.success('Loading,  please wait...');
   let data = new FormData()
-  if(this.state.stockImg){
-   data.append('categoryImage', this.state.stockImg)
-  data.append('filename', this.state.stockImg.name)
-  }
+  // if(this.state.stockImg){
+  //  data.append('categoryImage', this.state.stockImg)
+  // data.append('filename', this.state.stockImg.name)
+  // }
+  data.append('src', this.state.src)
   data.append('owner', this.props.match.params.id)
   data.append('storename', this.state.storename)
   data.append('storetype', this.state.storetype)
@@ -120,41 +146,52 @@ submit = (ev) => {
   data.append('phone', this.state.phone)
 
   let stock = {
-    _id: this.props.match.params.id,
+    src: this.state.src,
+    owner: this.props.match.params.id,
     storename: this.state.storename,
     storetype: this.state.storetype,
     productname: this.state.stockName,
     productDescription: this.state.stockDescription,
-    location: {longitude: this.state.location.longitude,
-               latitude: this.state.location.latitude,
-               address: this.state.location.address, },
+    longitude: this.state.location.longitude,
+    latitude: this.state.location.latitude,
+    address: this.state.location.address, 
+    
     phone: this.state.phone,
     email: this.state.email,
     comments: '',
-    i: this.state.stockImg
+    i: this.state.stockImg,
+    
   }
   
-  if(stock.productname.trim() === "" || stock.productDescription.trim() === "" || stock.location.address == '')
+  if(stock.productname.trim() === "" || stock.productDescription.trim() === "" || stock.address == '')
   {
     this.setState({err: 'Please All Fields Are Required'})
     return false
   }
-  if(this.state.stockImg === null ){
+  if(this.state.src === null ){
     this.setState({err: 'An Image Is Required'})
     return false
   }
   else {
-    axios.post('/products/addone', data, {
+    if(this.state.src){
+      
+    axios.post('/products/addone', stock, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
         })
       }
     })
-    .then((res) => {toast.success('Product Add Successfully')})
+    .then((res) => {
+      if(res.data.error){
+        toast.error('Store creation failed, please try again')
+           return
+         };
+      toast.success('Product Add Successfully')})
   .then(() => this.props.history.replace(`/mystore/${this.props.match.params.id}`))
   .catch(err => {toast.error("Upload Failed, Please Try Again. Don't Forget To  Add An Image.")})
   return true
+    }
   }
   
 }
@@ -233,6 +270,11 @@ render() {
        
         <input type='file' onChange={this.filer} accept="image/*" />
                   
+        <div className="img-card">
+                  <h6>Preview</h6>
+                  {this.state.checkerImg && <img src={this.state.src} className="setupimg" /> || this.state.checkerImg === null && <FontAwesomeIcon icon={faGifts} size='lg'></FontAwesomeIcon> || this.state.checkerImg === "loading" && <div className="spin">  <Spinner color="primary" className="spinner" size="sm"/> </div>  }
+              </div>
+
                   <br/>
                   <br/>
         <br/>

@@ -63,13 +63,13 @@ class Notifications extends Component {
        <div className="note">
       <p className="display-4">Thank You For Choosing <strong>GigVee</strong></p>
         <p className="lead">Updates on the site and relevant information to you will be shown here . </p>
-        <p className="lead">A monthly update is bound to happen. </p>
         <h5 align="center">Contact</h5> 
            <div align="center">
            <a href="mailto:gigveeteam@gmail.com">
            <FontAwesomeIcon icon={faGooglePlusG} size='lg' className="btn-danger btn-g"></FontAwesomeIcon> <strong>gigveeteam@gmail.com</strong>
            </a>
             </div>
+            <br></br>
         <ToastContainer />
         </div>
       <Footer id={this.props.match.params.id} />

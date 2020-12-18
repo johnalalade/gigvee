@@ -72,7 +72,7 @@ class SetUp extends Component {
              <br/>
             <div className="card-bg-setup">
                  <div className="img-card">
-                 {this.state.profile.image && <img src={`/${this.state.profile.image}`} className="setupimg" alt="prod" /> || <FontAwesomeIcon icon={faUser} size='lg'></FontAwesomeIcon> }
+                 {this.state.profile.src && <img src={this.state.profile.src} className="setupimg" alt="profile img" /> || <FontAwesomeIcon icon={faUser} size='lg'></FontAwesomeIcon> }
                   </div>
                   <br/>
                   <div className="lists">

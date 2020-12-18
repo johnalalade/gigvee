@@ -89,7 +89,8 @@ const addProduct = (req, res, next) => {
         
         phone: req.body.phone,
         email: req.body.email, 
-        distance: ''
+        distance: '',
+        src: req.body.src
 
     })
     // if(req.files) {
@@ -100,12 +101,12 @@ const addProduct = (req, res, next) => {
     //     path = path.substring(0, path.lastIndexOf(","))
     //     store.avatar = path
     // }
-    if(req.file){
-        store.image = req.file.path
-    }
-  if(req.body.filename){
-      store.filename = req.body.filename 
-  }
+//     if(req.file){
+//         store.image = req.file.path
+//     }
+//   if(req.body.filename){
+//       store.filename = req.body.filename 
+//   }
     if(req.body.comment){
         store.comments = store.comments.unShift(req.body.comment)
     }

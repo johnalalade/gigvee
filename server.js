@@ -59,6 +59,12 @@ app.use('/', storeRoute)
 app.use('/', productsRoute)
 app.use('/', authRoute)
 
+
+// aws_access_key_id = "AKIA527EVMP3OOUZNUXZ"
+// aws_secret_access_key = "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"
+
+// aws.config.credentials.accessKeyId = 'AKIA527EVMP3OOUZNUXZ'
+
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'us-east-2'
 
@@ -66,13 +72,22 @@ app.post('/sign-s3', (req, res) => {
   const s3 = new aws.S3();
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
+  const imgName = 'gigvee'+'-'+Date.now()+fileName
   const s3Params = {
     Bucket: S3_BUCKET,
-    Key: fileName,
+    Key: imgName,
     Expires: 180,
     ContentType: fileType,
     ACL: 'public-read'
   };
+
+  // aws.config.getCredentials(function(err) {
+  //   if (err) console.log(err.stack);
+  //   // credentials not loaded
+  //   else {
+  //     console.log("Access key:", aws.config.credentials.accessKeyId);
+  //   }
+  // });
 
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if(err){
@@ -81,11 +96,11 @@ app.post('/sign-s3', (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${imgName}`
     };
     res.json({
       signedRequest: data,
-      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${imgName}`
     });
    // res.end();
   });

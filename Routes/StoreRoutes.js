@@ -9,8 +9,10 @@ const validation = require('../Middleware/validation.js')
 storeRouter.post('/store/search', StoreController.searchStore)
 storeRouter.get('/store', StoreController.indexStore)
 storeRouter.post('/store/showone', StoreController.showStore)
-storeRouter.post('/store/addone', uploadMulter,validation ,StoreController.addStore)
-storeRouter.post('/store/updateone', uploadMulter,validation , StoreController.updateStore)
+storeRouter.post('/store/addone', StoreController.addStore)
+storeRouter.post('/store/updateone', StoreController.updateStore)
 storeRouter.post('/store/deleteone', StoreController.deleteStore)
 
 module.exports = storeRouter
+
+//uploadMulter,validation ,

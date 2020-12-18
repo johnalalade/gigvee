@@ -34,6 +34,9 @@ class MyStore extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      src: null,
+      checker: null,
+      checkerImg: null,
       img: null,
       storename: "",
       storetype: "",
@@ -60,8 +63,10 @@ class MyStore extends Component {
   componentDidMount() {
     let id = {storeID: this.props.match.params.id}
     axios.post('/store/showone', id)
-    .then((res) => {this.setState({
-     
+    .then((res) => {
+      //console.log(res);
+      this.setState({
+      src: res.data.response.src,
       storeName: res.data.response.storename,
       storeType: res.data.response.storeType,
       storeDescription: res.data.response.storeDescription,
@@ -75,14 +80,17 @@ class MyStore extends Component {
       id: res.data.response._id,
       
     });
-   // console.log(res)
+    
+   //if (res.data.response.src){ this.setState({ checkerImg: true})}
     if(res.data.response.storename){this.setState({found: 'found'})}
-    else{
-      toast.error("You don't have a store yet. If you do check your connection and try again")
-      this.setState({found: 'not-found'})}} 
+    // else{
+    //   toast.error("You don't have a store yet. If you do check your connection and try again")
+
+    //   this.setState({found: 'not-found', checkerImg: null})}
+  } 
    )
     .catch((err) => {
-      toast.error("You don't have a store yet. If you do check your connection and try again")
+      toast.error("You don't have a store yet. If you do check your connection and try again"+ err)
       toast.error(err)
       this.setState({found: 'not-found'})
       this.setState({hasAccount: false})
@@ -111,17 +119,37 @@ phoneU = (ev) => {
   this.setState({phone});
 }
 filer = (ev) => {
- // console.log(ev.target)
- let file = ev.target.files[0]
+  //console.log(ev.target)
+  this.setState({
+    checkerImg: "loading"
+  })
+  toast.info("Loading,please wait for preview before clicking update button...")
+  let file = ev.target.files[0]
   if(file.size > 5000 * 5000 * 5) {
-    toast.error('Image Size Too Large')
     this.setState({err: "Image Size Too Large"})
   } else{
     this.setState({
       img: ev.target.files[0]
     })
+    this.setState({checker: true})
+   setTimeout(() => {
+    const uploadFile = (file, signedRequest, url) => {
+      axios.put(signedRequest, file)
+      .then(() => this.setState({
+        src: url,
+        checkerImg: true
+      }))
+      .catch(() => toast.error('could not upload image, please try again'))
+      
+    }
+    axios.post(`/sign-s3?file-name=${this.state.img.name}&file-type=${this.state.img.type}`)
+  .then((res) => {
+    //console.log(res)
+    const response = res.data
+  uploadFile(this.state.img, response.signedRequest, response.url);
+  })
+   }, 2000)
   }
-  
 }
 
 click = (ev) => {
@@ -129,12 +157,13 @@ click = (ev) => {
 }
 submit = (ev) => {
   ev.preventDefault();
-  toast.success('Loading,  please wait');
+  toast.success("Loading Please wait...")
   let data = new FormData()
-  if(this.state.img){
-    data.append('categoryImage', this.state.img)
-    data.append('filename', this.state.img.name)
-  }
+  // if(this.state.img){
+  //   data.append('categoryImage', this.state.img)
+  //   data.append('filename', this.state.img.name)
+  // }
+  data.append('src', this.state.src)
   data.append('storeID', this.props.match.params.id)
   data.append('storename', this.state.storename)
   data.append('storetype', this.state.storetype)
@@ -150,16 +179,16 @@ submit = (ev) => {
     storename: this.state.storename,
     storetype: this.state.storetype,
     storedescription: this.state.storeDescription,
-    location: {
-      longitude: this.state.location.longitude,
-      latitude: this.state.location.latitude,
-      address: this.state.location.address,
-    },
+    longitude: this.state.location.longitude,
+    latitude: this.state.location.latitude,
+    address: this.state.location.address,
+  
     email: this.state.email,
     phone: this.state.phone,
+    src: this.state.src
   }
 
-  if(store.storename.trim() == "" || store.storedescription.trim() == "" || store.storetype.trim() == "" || store.email.trim() == "" || store.phone.trim() == "" || store.location.address == '')
+  if(store.storename.trim() == "" || store.storedescription.trim() == "" || store.storetype.trim() == "" || store.email.trim() == "" || store.phone.trim() == "" || store.address == '')
   {
     this.setState({err: 'Please All Fields Are Required'})
     return false
@@ -169,7 +198,9 @@ submit = (ev) => {
   //   return false
   // }
   else {
-    axios.post('/store/addone', data, {
+    if(this.state.src){
+      
+    axios.post('/store/addone', store, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
@@ -177,12 +208,18 @@ submit = (ev) => {
       }
     })
     
-  .then((result) => {toast.success('Store Created Successfully')})
- .then(() => window.location.reload())
-  .catch(err => {toast.error("Store Creation Failed, Please Try Again. Don't Forget To Add A Logo Image"+err)})
+  .then((result) => {
+   // console.log(result)
+    if(result.data.error){
+      toast.error('Store creation failed, please try again')
+         return
+       };
+    toast.success('Store Created Successfully')})
+  .then(() => window.location.reload())
+  .catch(err => {toast.error("Store Creation Failed, Please "+ err)})
   return true
   }
-  
+}
 }
 
 
@@ -259,6 +296,12 @@ reverseGeocodeCoordinates(position) {
              
 
               <input type='file' onChange={this.filer} accept="image/*" /> 
+
+              <div className="img-card">
+                  <h6>Preview</h6>
+                  {this.state.checkerImg && <img src={this.state.src} className="setupimg" /> || this.state.checkerImg === null && <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon> || this.state.checkerImg === "loading" && <div className="spin">  <Spinner color="primary" className="spinner" size="sm"/> </div>  }
+              </div>
+
                   <br/>
                   <br/>
               <h3 className="err">{this.state.err}</h3>

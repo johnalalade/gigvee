@@ -349,7 +349,7 @@ handleLocationError(error) {
                {this.state.product &&
                   <Cards key={this.state.product.storename} storeName={this.state.product.storename}
                           productName={this.state.product.productName} 
-                          img={`/${this.state.product.image}`}
+                          img={this.state.product.src}
                           productDescription={this.state.product.productDescription} 
                           commentsHandler={commentsHandler}
                           dis={this.state.product.distance}

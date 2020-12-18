@@ -66,15 +66,11 @@ const addStore = (req, res, next) => {
         email: req.body.email,
         phone: req.body.phone,
         sub: 2,
-        subDate: Date.now()
+        subDate: Date.now(),
+        src: req.body.src
 
     })
-    if(req.file){
-        store.image = req.file.path
-    }
-  if(req.body.filename){
-      store.filename = req.body.filename 
-  }
+   
     store.save()
     .then(response => {
         
@@ -127,23 +123,9 @@ const updateStore = (req, res, next) => {
                    address: req.body.address},
         email: req.body.email,
         phone: req.body.phone,
+        src: req.body.src
         
     }
-    if(req.file){
-        updatedStore.image = req.file.path
-    }
-  if(req.body.filename){
-      updatedStore.filename = req.body.filename 
-  }
-
-  StoreProfile.findById(storeID)
-  .then(response => {
-      fs.unlink(`${response.image}`,(err) => {
-          if(err) console.log(err)
-          else console.log('file deleted')
-      })
-  })
-  .then(() => {
     StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
     .then(() => {
         res.json({
@@ -152,15 +134,10 @@ const updateStore = (req, res, next) => {
     })
     .catch(error => {
         res.json({
-            message: "An Error Occured"+ error
+            error,
+            message: "An Error Occured"
         })
     })
-  })
-  .catch(err => {
-    res.json({
-        message: "Minor Error Occured"
-    })
-})
 }
 
 // delete store

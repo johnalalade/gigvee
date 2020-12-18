@@ -5,13 +5,8 @@ const ProductsSchema = new Schema({
     owner: {
         type: String
     },
-    image: {
-        type: String,
-        trim: true
-    },
-    filename: {
-        type: String,
-        trim: true
+    src: {
+        type: String
     },
     storename: {
         type: String,

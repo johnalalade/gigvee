@@ -239,7 +239,7 @@ customSort = (a,b) => {
                
                 {this.state.products.map((product)=>
                   <Cards key={product._id} storeName={product.storename}
-                          productName={product.productName} img={`/${product.image}`}
+                          productName={product.productName} img={product.src}
                           productDescription={product.productDescription}
                           deta={deta} address={product.location.address}
                           comments={product.comments} id={product._id}/>
