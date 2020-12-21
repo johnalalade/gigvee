@@ -360,6 +360,7 @@ handleLocationError(error) {
                           phone={this.state.product.phone} 
                           email={this.state.product.email} 
                           message={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
+                          
                           Product Name: ${this.state.product.productName}
                           Description: ${this.state.product.productDescription}
                           `}
