@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const authenticate = (req, res, next) => {
     try{
-        const token = req.headers.authorization.split(' ')[1]
+        const token = req.body.token
         const decode = jwt.verify(token, "Iyaaduke+5")
 
         req.user = decode
@@ -17,3 +17,4 @@ const authenticate = (req, res, next) => {
 }
 
 module.exports = authenticate 
+// req.headers.authorization.split(' ')[1]

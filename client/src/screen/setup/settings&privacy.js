@@ -3,6 +3,11 @@ import Header from '../header';
 import Footer from '../foot';
 
 class Settings extends Component {
+  componentDidMount(){
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
+  }
     render() {
         return (
           <div>

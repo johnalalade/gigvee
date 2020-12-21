@@ -92,6 +92,7 @@ class Home extends Component {
   constructor(){
     super();
     this.state = {
+      token: localStorage.getItem('token'),
       long1: '',
       lat1: '',
       loader: 0,
@@ -150,7 +151,7 @@ dateChecker = (c) => {
   var difference_In_Days = difference_In_Time / (1000 * 3600 *24)
  
   if(difference_In_Days >= 30){
-    let todele = {product: c._id}
+    let todele = {product: c._id, token: this.state.token}
     axios.post('/products/deleteone', todele)
     return c = {owner: "delete"}
     
@@ -179,11 +180,13 @@ customSort = (a,b) => {
   return 0;
 }
   componentDidMount() {
-    
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
    this.getLocation()
 
-    
-    axios.post('/products')
+    let token = {token: this.state.token}
+    axios.post('/products', token)
     
     .then((data) => {
       //console.log(data)
@@ -205,7 +208,7 @@ customSort = (a,b) => {
     .then(data => {this.setState({loader: 1});this.setState({products: data})})
     // .then(data => this.setState({products: data.data.response}))
     // .then(res => console.log(this.state.products))
-    .catch(err => {toast.error("Couldn't Get Data, Please Try Again."+err)})
+    .catch(err => {toast.error("Couldn't Get Data, Please Try Again.")})
   }
     
 

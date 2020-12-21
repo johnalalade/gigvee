@@ -52,6 +52,7 @@ class MyStoreDis extends Component {
   constructor(props){
     super(props);
     this.state = {
+      token: localStorage.getItem('token'),
       products: null,
       store: {},
       address: ""
@@ -82,7 +83,10 @@ datefilter = (k) => {
   return k.owner !== "delete"
 }
   componentDidMount(){
-    let store = {storeID: this.props.id}
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
+    let store = {storeID: this.props.id, token: this.state.token}
     axios.post('/store/showone', store)
     
     .then((data) => { 
@@ -92,7 +96,7 @@ datefilter = (k) => {
       address: data.data.response.location.address
     })})
 
-    let prod = {ownerId: this.props.id}
+    let prod = {ownerId: this.props.id, token: this.state.token}
     axios.post('/products/myproducts', prod)
     .then((data) => {return data.data.response})
     .then(ans => ans.map(this.dateChecker))
@@ -108,7 +112,7 @@ datefilter = (k) => {
      
     
       const deta = (id) => {
-        let todele = {product: id}
+        let todele = {product: id, token: this.state.token}
         toast.success('Deleting, please wait...')
         axios.post('/products/deleteone', todele)
         .then(() => toast.success('Delete Successful.'))

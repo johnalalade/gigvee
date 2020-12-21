@@ -33,7 +33,7 @@ class UpdateStore extends Component {
       email: "",
       phone: "",
       id: "",
-      
+      token: localStorage.getItem('token'),
       err: '',
       loaded: 0,
       loaded2: 0,
@@ -46,7 +46,10 @@ class UpdateStore extends Component {
   }
 
   componentDidMount() {
-    let id = {storeID: this.props.match.params.id}
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
+    let id = {storeID: this.props.match.params.id, token: this.state.token}
     axios.post('/store/showone', id)
     .then((res) => {this.setState({
       src: res.data.response.src,
@@ -161,7 +164,7 @@ submit = (ev) => {
     longitude: this.state.location.longitude,
     latitude: this.state.location.latitude,
     address: this.state.location.address,
-    
+    token: this.state.token,
     email: this.state.email,
     phone: this.state.phone,
     src: this.state.src
@@ -186,7 +189,7 @@ submit = (ev) => {
     })
   
   .then((res) =>{
-    console.log(res)
+   // console.log(res)
     if(res.data.error){
       toast.error('Update failed, please try again')
          return

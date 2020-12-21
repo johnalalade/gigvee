@@ -5,6 +5,7 @@ import './setup/setup.css'
 // import '/Users/user/Desktop/bro AY/exploits/backend/uploads';
 
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,11 +47,15 @@ class SetUp extends Component {
   constructor(props){
     super(props);
     this.state= {
-      profile: {}
+      profile: {},
+      token: localStorage.getItem('token')
     }
   }
   componentDidMount() {
-    let user = {userID: this.props.match.params.id}
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+     }
+    let user = {userID: this.props.match.params.id, token: this.state.token}
     axios.post('/profiles/showone', user)
     
     .then((data)=>{this.setState({profile: data.data.response})})
@@ -83,9 +88,11 @@ class SetUp extends Component {
                     <a className="card-list" onClick={()=>
                                   this.props.history.push(`/mystore/${this.props.match.params.id}`)} >My Store</a>
                     <hr/>
-                    {/* <p className="card-list" onClick={()=>
-                                  this.props.history.push(`shop/${this.props.match.params.id}`)} >Bookmark</p>
-                    <hr/> */}
+                     <a className="card-list" onClick={() => {
+                       localStorage.clear();
+                       this.props.history.replace(`/login`);
+                    }} >Log Out</a>
+                    <hr/>
                     <a className="card-list" onClick={()=>
                                   this.props.history.push(`/privacy/${this.props.match.params.id}`)} >Privacy Policy</a>
                     <hr/> 

@@ -29,6 +29,7 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
+      token: localStorage.getItem('token'),
       firstName: '',
       lastName: '',
       password: '',
@@ -46,7 +47,10 @@ class Profile extends Component {
   }
 
   componentDidMount(){
-    let userID = {userID: this.props.match.params.id}
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
+    let userID = {userID: this.props.match.params.id,token: this.state.token}
     axios.post('/profiles/showone', userID)
     
     .then((res) => {this.setState({
@@ -164,7 +168,7 @@ submit = (ev) => {
       userID: this.props.match.params.id,
       firstname: this.state.firstName,
       lastname: this.state.lastName,
-      
+      token: this.state.token,
       email: this.state.email,
       phone: this.state.phone,
       src: this.state.src

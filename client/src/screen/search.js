@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import Header from './header';
-
+//import {Redirect} from 'react-router-dom'
 import axios from 'axios';
 import './style.css';
 // import '/Users/user/Desktop/bro AY/exploits/backend/uploads';
@@ -101,6 +101,7 @@ class Search extends Component{
   constructor(){
     super();
     this.state= {
+      token: localStorage.getItem('token'),
       search: "",
       found: null,
       long1: '',
@@ -160,7 +161,7 @@ dateChecker = (c) => {
   var difference_In_Days = difference_In_Time / (1000 * 3600 *24)
  
   if(difference_In_Days >= 30){
-    let todele = {product: c._id}
+    let todele = {product: c._id, token: this.state.token}
     axios.post('/products/deleteone', todele)
     return c = {owner: "delete"}
     
@@ -192,6 +193,9 @@ customSort = (a,b) => {
 
 
   componentDidMount (){
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
     this.getLocation()
   }
 
@@ -205,7 +209,7 @@ customSort = (a,b) => {
 
     this.setState({found: "searching"})
 
-    let value = {data: this.state.search}
+    let value = {data: this.state.search, token: this.state.token}
     if(value.data === ""){
       toast.error(`Please Type Something to search`)
       this.setState({found: null})
@@ -214,7 +218,7 @@ customSort = (a,b) => {
 
     axios.post('/products/search', value)
     .then((data) => {
-      console.log(data)
+      //console.log(data)
       data.data.response.forEach(this.distancer)
       return data.data.response})
     .then(ans => ans.map(this.dateChecker))

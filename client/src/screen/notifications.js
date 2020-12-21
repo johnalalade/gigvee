@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Footer from './foot';
 import Header from './header';
+//import {Redirect} from 'react-router-dom'
 //import axios from 'axios';
 import './style.css';
 import { ToastContainer, toast} from 'react-toastify';
@@ -32,11 +33,15 @@ class Notifications extends Component {
     this.state = {
       long1: '',
       lat1: '',
-      user: []
+      user: [], 
+      token: localStorage.getItem('token'),
     }
   }
 
-  // componentDidMount(){
+  componentDidMount(){
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
   //   let send = {userID: this.props.match.params.id}
   //   axios.post('/profiles/showone', send)
   //   .then((response) => response.json())
@@ -47,7 +52,7 @@ class Notifications extends Component {
   //   }))
   //   .then((data) => {this.setState({user: data})})
   //   .catch(err => {toast.error("Couldn't Get Data, Please Try Again.")})
-  // }
+  }
 
 
   render(){

@@ -3,7 +3,7 @@ import Footer from './foot';
 import Header from './header';
 //import Container from 'reactstrap/lib/Container';
 import { Media, Button } from 'reactstrap';
-
+//import {Redirect} from 'react-router-dom'
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -56,6 +56,10 @@ class Shops extends Component {
   }
 
   componentDidMount(){
+
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
     let user = {userID: this.props.match.params.id}
     axios.post('/profiles/showone', user)
    

@@ -83,7 +83,9 @@ submit = (ev) => {
       }
     })
     .then(()=> axios.post('/login', user))
-    .then((res)=>{if(res.data.id){this.props.history.replace(`/home/${res.data.id}`)}
+    .then((res)=>{if(res.data.id){
+      localStorage.setItem('token', res.data.token)
+      this.props.history.replace(`/home/${res.data.id}`)}
    else {return}})
   .then((res) => {toast.error('Sign Up Failed, Please Try Again.'+ res.data.message)})
     .then((res) => {toast.success('Sign Up Successful')})

@@ -34,6 +34,7 @@ class MyStore extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: localStorage.getItem('token'),
       src: null,
       checker: null,
       checkerImg: null,
@@ -61,7 +62,10 @@ class MyStore extends Component {
   }
 
   componentDidMount() {
-    let id = {storeID: this.props.match.params.id}
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
+    let id = {storeID: this.props.match.params.id, token: this.state.token}
     axios.post('/store/showone', id)
     .then((res) => {
       //console.log(res);
@@ -182,7 +186,7 @@ submit = (ev) => {
     longitude: this.state.location.longitude,
     latitude: this.state.location.latitude,
     address: this.state.location.address,
-  
+    token: this.state.token,
     email: this.state.email,
     phone: this.state.phone,
     src: this.state.src

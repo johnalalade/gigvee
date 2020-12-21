@@ -69,7 +69,7 @@ const login = (req, res, next)=> {
                     })
                 }
                 if(result) {
-                    let token = jwt.sign({name: user.name},"Iyaaduke+5", {expiresIn: '24h'})
+                    let token = jwt.sign({name: user.name},"Iyaaduke+5")
                     console.log(user)
                     res.json({
                         message: "Login Succesful",
@@ -168,3 +168,5 @@ const updateProfile = (req, res, next) => {
 module.exports = {
     register, login, showOne, storeProfile, updateProfile, indexProfile
 }
+
+// {expiresIn: '24h'}

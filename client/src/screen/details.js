@@ -207,6 +207,7 @@ class Details extends Component {
   constructor(props){
     super(props);
     this.state = {
+      token: localStorage.getItem('token'),
       product: null,
       lat1: '',
       long1: '',
@@ -226,10 +227,13 @@ distancer = (c) => {
  }
 
   componentDidMount(){
+    if(!localStorage.getItem('token')){
+      this.props.history.replace(`/login`);
+    }
     this.getLocation()
     
 
-    let id = {productID: this.props.match.params.id2}
+    let id = {productID: this.props.match.params.id2, token: this.state.token}
    
     axios.post('/products/showone', id)
     .then((data) => {

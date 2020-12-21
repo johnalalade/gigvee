@@ -35,6 +35,7 @@ class AddStock extends Component {
     constructor(props) {
     super(props);
     this.state = {
+      token: localStorage.getItem('token'),
       src: null,
       checker: null,
       checkerImg: null,
@@ -61,7 +62,10 @@ class AddStock extends Component {
 }
 
 componentDidMount(){
-  let user = {storeID:  this.props.match.params.id} 
+  if(!localStorage.getItem('token')){
+    this.props.history.replace(`/login`);
+  }
+  let user = {storeID:  this.props.match.params.id, token: this.state.token} 
   
   axios.post('/store/showone', user)
  
@@ -155,7 +159,7 @@ submit = (ev) => {
     longitude: this.state.location.longitude,
     latitude: this.state.location.latitude,
     address: this.state.location.address, 
-    
+    token: this.state.token,
     phone: this.state.phone,
     email: this.state.email,
     comments: '',
