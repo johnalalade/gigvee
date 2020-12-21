@@ -167,7 +167,7 @@ const Cards = (prop, {location}) => {
              <p>Contact</p>
             <a className="enq" target="_blank" href={`https://wa.me/${prop.phone}?text=${prop.message}`}  className="btn btn-success" > <FontAwesomeIcon icon={faWhatsapp} size="lg"></FontAwesomeIcon> Whatsapp</a> 
             
-            <a className="enq" target="_blank" href={`mailto:${prop.email}?subject=${subject}&body=${prop.message}`} className="btn btn-danger" > <FontAwesomeIcon icon={faGooglePlusG} size="lg"></FontAwesomeIcon> Mail</a>
+            <a className="enq" target="_blank" href={`mailto:${prop.email}?subject=${subject}&body=${prop.message1}`} className="btn btn-danger" > <FontAwesomeIcon icon={faGooglePlusG} size="lg"></FontAwesomeIcon> Mail</a>
             <hr/>
            
             </div>
@@ -359,10 +359,18 @@ handleLocationError(error) {
                           dis={this.state.product.distance}
                           phone={this.state.product.phone} 
                           email={this.state.product.email} 
-                          message={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
+                          message1={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
                           
+
                           Product Name: ${this.state.product.productName}
                           Description: ${this.state.product.productDescription}
+                          `}
+                          
+                          message={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
+                          
+
+                          *Product Name*: ${this.state.product.productName}
+                          *Description*: ${this.state.product.productDescription}
                           `}
                           comments={this.state.product.comments} 
                           id={this.state.product.id} 
