@@ -361,16 +361,17 @@ handleLocationError(error) {
                           email={this.state.product.email} 
                           message1={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
                           
-
                           Product Name: ${this.state.product.productName}
+
                           Description: ${this.state.product.productDescription}
                           `}
-                          
+
                           message={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
                           
 
-                          *Product Name*: ${this.state.product.productName}
-                          *Description*: ${this.state.product.productDescription}
+                          
+                          *Product Name:* ${this.state.product.productName}
+                          *Description:* ${this.state.product.productDescription}
                           `}
                           comments={this.state.product.comments} 
                           id={this.state.product.id} 
