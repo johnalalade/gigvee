@@ -363,13 +363,14 @@ handleLocationError(error) {
                           
                           Product Name: ${this.state.product.productName}
 
+                          
                           Description: ${this.state.product.productDescription}
                           `}
 
-                          message={`Hello, I saw your store on the "GigVee" website. I want to make Enquiries about the "${this.state.product.productName}" you posted.
+                          message={`Hello, I saw your store on the *GigVee* website. I want to make Enquiries about the *${this.state.product.productName}* you posted.
                           
 
-                          
+
                           *Product Name:* ${this.state.product.productName}
                           *Description:* ${this.state.product.productDescription}
                           `}
