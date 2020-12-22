@@ -68,8 +68,10 @@ class UpdateStore extends Component {
     })
    
     if(res.data.response.storename){this.setState({found: 'found'})}
+  
+    else{this.setState({found: null})}
     if (res.data.response.src){ this.setState({ checkerImg: true})}
-    else{this.setState({found: null})}}
+  }
     )
     .catch((err) => {
       toast.error('Failed To Get Data, Please Try Again'+ err)

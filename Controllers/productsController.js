@@ -1,6 +1,9 @@
 const Products = require('../Models/ProductsModel');
 const fs = require('fs');
+const aws = require('aws-sdk');
 
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = 'us-east-2'
 // search of Products
 
 const searchProducts = (req, res, next) => {
@@ -185,13 +188,23 @@ const deleteProduct = (req, res, next) => {
     console.log(productID)
     Products.findByIdAndRemove(productID)
     .then((response) => {
-        
-        fs.unlink(`${response.image}`,(err) => {
-            if(err) console.log(err)
-            else console.log('file deleted')
-        })
+
+        const s3 = new aws.S3();
+        const imgName = response.src.slice(32)
+        const s3Params = {
+            Bucket: S3_BUCKET,
+            Key: imgName,
+            // Expires: 180,
+            // ContentType: fileType,
+            // ACL: 'public-read'
+          };
+          s3.deleteObject(s3Params, function(err, data) {
+              if(err) console.log("image deletion failed"+err, err.stack)
+              else console.log("image deleted") 
+          })
+
         res.json({
-            message: "Store Deleted"
+            message: "Product Deleted"
         })
     })
     .catch(() => {

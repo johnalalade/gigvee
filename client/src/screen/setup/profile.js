@@ -63,9 +63,10 @@ class Profile extends Component {
       phone: res.data.response.phone,
       found: 'found'
     })
+   // console.log(res)
     if(res.data.response.firstname){this.setState({found: 'found'})}
-    if (res.data.response.src){ this.setState({ checkerImg: true})}
     else{this.setState({found: null})}
+    if (res.data.response.src){ this.setState({ checkerImg: true})}
   })
     .catch(err => {toast.error("Couldn't Get Data, Please Try Again."+err)})
   }

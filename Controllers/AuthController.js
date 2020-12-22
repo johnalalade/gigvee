@@ -3,6 +3,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
+const aws = require('aws-sdk');
+
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = 'us-east-2'
 //const uploadPath = path.join('public', Login.imageBasePath)
 require('dotenv').config();
 
@@ -149,17 +153,37 @@ const updateProfile = (req, res, next) => {
         email: req.body.email,
         phone: req.body.phone,
     }
-    Login.findByIdAndUpdate(userID, {$set: updatedProfile})
+    Login.findById(userID)
+    .then((data) => {
+        const s3 = new aws.S3();
+        const imgName = data.src.slice(32)
+        const s3Params = {
+            Bucket: S3_BUCKET,
+            Key: imgName,
+            // Expires: 180,
+            // ContentType: fileType,
+            // ACL: 'public-read'
+          };
+          s3.deleteObject(s3Params, function(err, data) {
+              if(err) console.log("image deletion failed"+err, err.stack)
+              else console.log("image deleted") 
+          })
+    })
     .then(() => {
-        res.json({
-            message: "Profile Updated Successfully"
+        Login.findByIdAndUpdate(userID, {$set: updatedProfile})
+        .then(() => {
+            res.json({
+                message: "Profile Updated Successfully"
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: "An Error Occured"
+            })
         })
     })
-    .catch(error => {
-        res.json({
-            message: "An Error Occured"
-        })
-    })
+    .catch((err) => console.log(err))
+   
      
 }
         

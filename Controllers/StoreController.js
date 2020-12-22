@@ -1,5 +1,9 @@
 const StoreProfile = require('../Models/StoreModel');
 const fs = require('fs');
+const aws = require('aws-sdk');
+
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = 'us-east-2'
 
 // search store
 
@@ -126,7 +130,24 @@ const updateStore = (req, res, next) => {
         src: req.body.src
         
     }
-    StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
+    StoreProfile.findById(storeID)
+    .then((data) => {
+        const s3 = new aws.S3();
+        const imgName = data.src.slice(32)
+        const s3Params = {
+            Bucket: S3_BUCKET,
+            Key: imgName,
+            // Expires: 180,
+            // ContentType: fileType,
+            // ACL: 'public-read'
+          };
+          s3.deleteObject(s3Params, function(err, data) {
+              if(err) console.log("image deletion failed"+err, err.stack)
+              else console.log("image deleted") 
+          })
+    })
+    .then(() => {
+        StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
     .then(() => {
         res.json({
             message: "Profile Updated Successfully"
@@ -138,6 +159,9 @@ const updateStore = (req, res, next) => {
             message: "An Error Occured"
         })
     })
+    })
+    .catch((err) => console.log(err))
+    
 }
 
 // delete store
