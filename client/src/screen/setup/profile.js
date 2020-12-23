@@ -254,7 +254,7 @@ render() {
                   <Progress max="100" color="success" value={this.state.loaded}>{Math.round(this.state.loaded,2)}%</Progress>
                  
                   <br/>
-                  <button className="btn btn-success" block={true}>Update</button>
+                  <button className="btn btn-success">Update</button>
                   <ToastContainer />
 
               </Form>
