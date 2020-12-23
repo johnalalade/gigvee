@@ -127,7 +127,7 @@ filer = (ev) => {
   this.setState({
     checkerImg: "loading"
   })
-  toast.info("Loading,please wait for preview before clicking update button...")
+  toast.info("Loading,please wait for preview before clicking 'Save' button...")
   let file = ev.target.files[0]
   if(file.size > 5000 * 5000 * 5) {
     this.setState({err: "Image Size Too Large"})
