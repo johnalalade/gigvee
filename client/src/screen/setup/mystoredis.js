@@ -69,7 +69,7 @@ dateChecker = (c) => {
   var difference_In_Days = difference_In_Time / (1000 * 3600 *24)
  
   if(difference_In_Days >= 30){
-    let todele = {product: c._id}
+    let todele = {product: c._id, token: this.state.token}
     axios.post('/products/deleteone', todele)
     return c = {owner: "delete"}
     
