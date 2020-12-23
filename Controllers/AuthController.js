@@ -155,6 +155,7 @@ const updateProfile = (req, res, next) => {
     }
     Login.findById(userID)
     .then((data) => {
+        if(data.src){
         const s3 = new aws.S3();
         const imgName = data.src.slice(32)
         const s3Params = {
@@ -164,7 +165,7 @@ const updateProfile = (req, res, next) => {
             // ContentType: fileType,
             // ACL: 'public-read'
           };
-          if(data.src){
+          
             s3.deleteObject(s3Params, function(err, data) {
                 if(err) console.log("image deletion failed"+err, err.stack)
                 else console.log("image deleted") 
