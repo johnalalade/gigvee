@@ -164,10 +164,14 @@ const updateProfile = (req, res, next) => {
             // ContentType: fileType,
             // ACL: 'public-read'
           };
-          s3.deleteObject(s3Params, function(err, data) {
-              if(err) console.log("image deletion failed"+err, err.stack)
-              else console.log("image deleted") 
-          })
+          if(data.src){
+            s3.deleteObject(s3Params, function(err, data) {
+                if(err) console.log("image deletion failed"+err, err.stack)
+                else console.log("image deleted") 
+            })
+          }
+          else{return}
+         
     })
     .then(() => {
         Login.findByIdAndUpdate(userID, {$set: updatedProfile})
