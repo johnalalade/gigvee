@@ -125,6 +125,7 @@ getCoordinates(position) {
 handleLocationError(error) {
   switch(error.code) {
     case error.PERMISSION_DENIED:
+      toast.info("Please Allow Request For Geolocation.")
       alert("Please Allow Request For Geolocation.")
       break;
     case error.POSITION_UNAVAILABLE:
@@ -183,6 +184,7 @@ customSort = (a,b) => {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
+    toast.dark('Allow geolocation permission')
    this.getLocation()
 
     let token = {token: this.state.token}

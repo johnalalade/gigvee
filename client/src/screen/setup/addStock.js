@@ -169,6 +169,7 @@ submit = (ev) => {
   
   if(stock.productname.trim() === "" || stock.productDescription.trim() === "" || stock.address == '')
   {
+    toast.error('Please All Fields Are Required');
     this.setState({err: 'Please All Fields Are Required'})
     return false
   }

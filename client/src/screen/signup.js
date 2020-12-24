@@ -69,7 +69,7 @@ class SignUp extends Component {
       userName: this.state.email
     }
     if (user.firstname.trim() == "" || user.lastname.trim() == "" || user.email.trim() == "" || user.phone.trim() == "" || user.password.trim() == "") {
-      toast.error('Please All Fields Are Required')
+      toast.error('Please All Fields Are Required');
       this.setState({ err: 'Please All Fields Are Required' })
       return false
     }
@@ -140,6 +140,7 @@ class SignUp extends Component {
                   }
                   <br />
                   <p className="text">By signing up, you agree to our <NavLink to="/policy" className="navlink policy">privacy policy</NavLink></p>
+                  <p className="text">Please allow geoloction permission in the next page once you've successfully signed up. For a great experience</p>
                   <button className="btn btn-success">Sign Up</button>
                   <ToastContainer />
 
