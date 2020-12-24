@@ -18,6 +18,7 @@ import SignUp from './screen/signup';
 import AddStock from './screen/setup/addStock';
 import UpdateStore from './screen/setup/updatestore';
 import Privacy from './screen/setup/privacy';
+import Welcome from './screen/welcome';
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
     <div>
         <BrowserRouter>
           <Switch>
-            <Route exact path='/' component={SignUp}/>
+            <Route exact path='/' component={Welcome}/>
+            <Route path='/register' component={SignUp}/>
             <Route path='/login' component={Logins}/>
             <Route path="/search/:id" component={Search}/>
             <Route path="/setup/:id" component={SetUp}/>

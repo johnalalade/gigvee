@@ -30,16 +30,16 @@ class AboutUs extends Component {
               </div>
               <div>
                 <p>
-                  <strong>GigVee</strong> is an online platform that truely brings the <strong>Business World</strong> to the Internet. It is the place where you can buy and sell goods and services, get employees or get employed. We help connect you to potential buyers and sellers, employees and employers who are around you. 
+                  <strong className="text">GigVee</strong> is an online platform that truely brings the <strong className="text">Business World</strong> to the Internet. It is the place where you can buy and sell goods and services, get employees or get employed. We help connect you to potential buyers and sellers, employees and employers who are around you. 
                   <br/>
                   <br/>
-                  GigVee allows you to create a store and post what you do once you've registered. Other user will be able to see your posts and will be able to make enquiries as well as make orders. 
+                  Once you've registered, <strong className="text">GigVee</strong> allows you to create a store and post what you do. Other users will be able to see your posts and will be able to make enquiries as well as make orders. 
                   <br/>
                   <br/>
                   You can post anything you do, ranging from your products and services, even to available vacancies in your business if your business is hiring
                   <br/>
                   <br/>
-                  Wtih <strong>GigVee</strong> you can easily get potential customers near you.
+                  Wtih <strong className="text">GigVee</strong> you can easily get potential customers near you.
                   <br/>
                   <br/>
                   We hope you enjoy your journey into a better business experience......

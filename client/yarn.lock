@@ -9239,6 +9239,11 @@ react-scroll-to-bottom@^4.0.0:
     prop-types "15.7.2"
     simple-update-in "2.2.0"
 
+react-simple-typewriter@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/react-simple-typewriter/-/react-simple-typewriter-1.0.13.tgz#3ff5e9c8a77e0208d0b6dfe2d1893ca6b93b105f"
+  integrity sha512-ri9LwuEVMqdUc19vxI7Lp9LfbpASX4lWvoI7lNBPkjjX58HVvCOw5wDhu2YFOu3ME3+f1hVuCvcpK5ODDTF8jA==
+
 react-toastify@^6.0.9:
   version "6.0.9"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-6.0.9.tgz#2a65e5ad9e05f3ee47664cbc69441498b9d694ce"

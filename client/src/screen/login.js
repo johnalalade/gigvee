@@ -20,7 +20,7 @@ class Logins extends Component  {
   }
 log = (ev) => {
    ev.preventDefault();
-    this.props.history.replace(`/`);
+    this.props.history.replace(`/register`);
  }
 userN = (ev) => {
          let name = ev.target.value;
@@ -61,8 +61,8 @@ submit = (ev) => {
   render(){
 
   return (
-    <div className="login-div">
-      <Container className="log-con">
+    <div>
+      <div className="container-fluid login-con">
         <Row>
           <Col md="6">
             <div>
@@ -91,7 +91,7 @@ submit = (ev) => {
               <Button className="btn btn-danger" onClick={this.log}>Sign up</Button>
           </Col>
         </Row>
-      </Container> 
+      </div> 
     </div>
   );
 }
