@@ -46,6 +46,21 @@
     justify-content: space-around;
     align-items: center;
 }
+.c-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: black; 
+}
+.c-img {
+    height: 300px;
+    max-width: 100vw;
+}
+.c-item {
+    color: rgb(255,69,0);
+    background: rgb(255,69,0); 
+}
 .img {
     border-radius: 50%;
     margin-left: 5em;

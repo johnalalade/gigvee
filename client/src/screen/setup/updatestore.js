@@ -74,7 +74,7 @@ class UpdateStore extends Component {
   }
     )
     .catch((err) => {
-      toast.error('Failed To Get Data, Please Try Again'+ err)
+      toast.error('Failed To Get Data, Please Try Again')
       this.setState({found: null})
     })
   }

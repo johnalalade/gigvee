@@ -94,8 +94,7 @@ class MyStore extends Component {
   } 
    )
     .catch((err) => {
-      toast.error("You don't have a store yet. If you do check your connection and try again"+ err)
-      toast.error(err)
+      toast.warning("You don't have a store yet. If you do check your connection and try again")
       this.setState({found: 'not-found'})
       this.setState({hasAccount: false})
     })

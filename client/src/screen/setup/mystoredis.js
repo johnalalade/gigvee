@@ -104,7 +104,7 @@ datefilter = (k) => {
     .then((data) =>{this.setState({
       products: data
     })})
-    .catch(err => {toast.error("Couldn't Get Data, Please Try Again."+ err)})
+    .catch(err => {toast.error("Couldn't Get Data, Please Try Again.")})
   }
     render() {
 

@@ -68,7 +68,7 @@ class Profile extends Component {
     else{this.setState({found: null})}
     if (res.data.response.src){ this.setState({ checkerImg: true})}
   })
-    .catch(err => {toast.error("Couldn't Get Data, Please Try Again."+err)})
+    .catch(err => {toast.error("Couldn't Get Data, Please Try Again.")})
   }
 
 
