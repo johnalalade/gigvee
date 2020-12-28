@@ -23,7 +23,7 @@ log = (ev) => {
     this.props.history.replace(`/register`);
  }
 userN = (ev) => {
-         let name = ev.target.value;
+         let name = ev.target.value.toLowerCase();
          this.setState({userName:name}); 
 }
 pword = (ev) => {

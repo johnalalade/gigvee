@@ -9,7 +9,7 @@ aws.config.region = 'us-east-2'
 const searchProducts = (req, res, next) => {
     let search = req.body.data
     console.log(search)
-    Products.find({$or: [{productName: search}, {storename: search}]})
+    Products.find({$or: [{productName: new RegExp(search, "ig")}, {storename: new RegExp(search, "ig")}]})
     .then(response => {
         res.json({
             response
@@ -217,3 +217,5 @@ const deleteProduct = (req, res, next) => {
 module.exports = {
     indexProducts, showProduct, updateProduct, deleteProduct, addProduct, searchProducts, myProducts
 }
+
+// , {productDescription: new RegExp(search, "igm")}

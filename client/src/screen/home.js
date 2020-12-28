@@ -184,7 +184,7 @@ customSort = (a,b) => {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
-    toast.dark('Allow geolocation permission')
+    toast.dark('Please Allow Geolocation Permission')
    this.getLocation()
 
     let token = {token: this.state.token}

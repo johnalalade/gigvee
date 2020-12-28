@@ -31,7 +31,7 @@ const items = [
     {
         src: Slide3,
         altText: 'Slide 3',
-        caption: 'Any Thing You Do'
+        caption: 'Anything You Do'
     }, {
         src: Slide4,
         altText: 'Slide 4',
@@ -90,8 +90,11 @@ class Welcome extends Component {
                 >
                     <div className="c-div">
                         <img className="c-img" src={item.src} alt={item.altText} />
+                        <div className="carousel-caption">
+                            <h4 className="c-caption">{item.caption}</h4>
+                        </div>
                     </div>
-                    <CarouselCaption captionText={item.caption} />
+                    {/* <CarouselCaption captionText={item.caption} /> */}
                 </CarouselItem>
             );
         });
@@ -185,7 +188,7 @@ class Welcome extends Component {
                     </div>
                 </div>
                 <div className="bottom">
-                    <p align="center"> GigVee Team &#169; {year.slice(10, 15)}</p>
+                    <p align="center"> GigVee Team {year.slice(10, 15)}</p>
                 </div>
             </div>
         );
@@ -193,3 +196,5 @@ class Welcome extends Component {
 }
 
 export default Welcome
+
+// &#169;

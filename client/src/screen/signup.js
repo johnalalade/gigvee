@@ -46,7 +46,7 @@ class SignUp extends Component {
     this.setState({ phone: name });
   }
   email = (ev) => {
-    let name = ev.target.value;
+    let name = ev.target.value.toLowerCase();
     this.setState({ email: name });
   }
   pword = (ev) => {
@@ -192,7 +192,7 @@ class SignUp extends Component {
           </div>
         </div>
         <div className="bottom">
-          <p align="center"> GigVee Team &#169; {year.slice(10, 15)}</p>
+          <p align="center"> GigVee Team {year.slice(10, 15)}</p>
         </div>
       </div>
     );
@@ -200,3 +200,5 @@ class SignUp extends Component {
 }
 
 export default SignUp;
+
+//&#169;
