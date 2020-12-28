@@ -202,7 +202,7 @@ submit = (ev) => {
   //   return false
   // }
   else {
-    if(this.state.src){
+    
       
     axios.post('/store/addone', store, {
       onUploadProgress: ProgressEvent => {
@@ -222,7 +222,7 @@ submit = (ev) => {
   .then(() => window.location.reload())
   .catch(err => {toast.error("Store Creation Failed, Please "+ err)})
   return true
-  }
+  
 }
 }
 

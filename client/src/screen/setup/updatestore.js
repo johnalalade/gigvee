@@ -180,7 +180,7 @@ submit = (ev) => {
   }
  
   else {
-    if(this.state.src){
+    
      
   
     axios.post('/store/updateone', store, {
@@ -202,7 +202,7 @@ submit = (ev) => {
     .then((res) => {toast.success('Update Successful')})
   .catch(err => {toast.error("Update Failed, Please Try Again. "+ Error)})
   return true
-  }
+ 
 }
 }
 

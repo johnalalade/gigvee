@@ -184,7 +184,7 @@ submit = (ev) => {
 
   else{
 
-  if(this.state.src){
+  
     toast.success("Loading Please wait")
 
     axios.post('/profiles/updateone', user, {
@@ -206,7 +206,7 @@ submit = (ev) => {
   
   .catch(err => {toast.error('Update Failed, Please Try Again. '+ err)})
      return true
-}  
+  
   }
 
 }
