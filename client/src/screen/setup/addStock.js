@@ -175,6 +175,7 @@ submit = (ev) => {
   }
   if(this.state.src === null ){
     this.setState({err: 'An Image Is Required'})
+    toast.error('An Image Is Required')
     return false
   }
   else {
