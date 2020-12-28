@@ -200,7 +200,7 @@ submit = (ev) => {
     this.props.history.replace(`/mystore/${this.props.match.params.id}`)
   })
     .then((res) => {toast.success('Update Successful')})
-  .catch(err => {toast.error("Update Failed, Please Try Again. "+ Error)})
+  .catch(err => {toast.error("Update Failed, Please Try Again. "+ err)})
   return true
  
 }
