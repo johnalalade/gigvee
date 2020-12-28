@@ -91,7 +91,7 @@ class Welcome extends Component {
                     <div className="c-div">
                         <img className="c-img" src={item.src} alt={item.altText} />
                         <div className="carousel-caption">
-                            <h4 className="c-caption">{item.caption}</h4>
+                            <h3 className="c-caption">{item.caption}</h3>
                         </div>
                     </div>
                     {/* <CarouselCaption captionText={item.caption} /> */}
