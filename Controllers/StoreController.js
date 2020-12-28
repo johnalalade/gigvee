@@ -132,6 +132,7 @@ const updateStore = (req, res, next) => {
     }
     StoreProfile.findById(storeID)
     .then((data) => {
+        if(data.src){
         const s3 = new aws.S3();
         const imgName = data.src.slice(32)
         const s3Params = {
@@ -145,7 +146,10 @@ const updateStore = (req, res, next) => {
               if(err) console.log("image deletion failed"+err, err.stack)
               else console.log("image deleted") 
           })
-    })
+        }
+        else{return}
+       
+  })
     .then(() => {
         StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
     .then(() => {
