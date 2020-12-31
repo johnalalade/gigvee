@@ -6,7 +6,7 @@ import {Form, Button, Container, Progress, Spinner} from 'reactstrap';
 import axios from 'axios';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faTruckMonster, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
@@ -38,10 +38,12 @@ class Profile extends Component {
       id: "",
       err: "",
       loaded: 0,
+      loaded2: 0,
       img: null,
       src: null,
       checker: null,
       checkerImg: null,
+      checkerImage: false,
       found: null
     }
   }
@@ -106,15 +108,24 @@ filer = (ev) => {
     this.setState({err: "Image Size Too Large"})
   } else{
     this.setState({
-      img: ev.target.files[0]
+      img: ev.target.files[0],
+    //  src: window.URL.createObjectURL(ev.target.files[0])
     })
     this.setState({checker: true})
    setTimeout(() => {
     const uploadFile = (file, signedRequest, url) => {
-      axios.put(signedRequest, file)
+      axios.put(signedRequest, file, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded2: (ProgressEvent.loaded / ProgressEvent.total*100),
+          })
+        }
+      }
+        )
       .then(() => this.setState({
         src: url,
-        checkerImg: true
+        checkerImg: true,
+        checkerImage: true
       }))
       .catch(() => toast.error('could not upload image, please try again'))
       // const xhr = new XMLHttpRequest();
@@ -145,7 +156,7 @@ filer = (ev) => {
     const response = res.data
   uploadFile(this.state.img, response.signedRequest, response.url);
   })
-   }, 2000)
+   }, 500)
   }
 }
 click = (ev) => {
@@ -172,7 +183,8 @@ submit = (ev) => {
       token: this.state.token,
       email: this.state.email,
       phone: this.state.phone,
-      src: this.state.src
+      src: this.state.src,
+      checkerImage: this.state.checkerImage
       
   }
   if(user.firstname.trim() == "" || user.lastname.trim() == "" || user.email.trim() == "")
@@ -234,6 +246,8 @@ render() {
                   <h6>Preview</h6>
                   {this.state.checkerImg && <img src={this.state.src} className="setupimg" /> || this.state.checkerImg === null && <FontAwesomeIcon icon={faUser} size='lg'></FontAwesomeIcon> || this.state.checkerImg === "loading" && <div className="spin">  <Spinner color="primary" className="spinner" size="sm"/> </div>  }
                   </div>
+                  <br/>
+                  <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress>
 
                   <br/>
                   <br/>

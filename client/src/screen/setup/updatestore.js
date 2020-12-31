@@ -20,6 +20,7 @@ class UpdateStore extends Component {
     this.state = {
       src: null,
       checker: null,
+      checkerImage: false,
       checkerImg: false,
       img: null,
       storeName: "",
@@ -37,7 +38,7 @@ class UpdateStore extends Component {
       err: '',
       loaded: 0,
       loaded2: 0,
-      found: null,
+      found: null
     };
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -116,10 +117,17 @@ filer = (ev) => {
     this.setState({checker: true})
    setTimeout(() => {
     const uploadFile = (file, signedRequest, url) => {
-      axios.put(signedRequest, file)
+      axios.put(signedRequest, file, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded2: (ProgressEvent.loaded / ProgressEvent.total*100),
+          })
+        }
+      })
       .then(() => this.setState({
         src: url,
-        checkerImg: true
+        checkerImg: true,
+        checkerImage: true
       }))
       .catch(() => toast.error('could not upload image, please try again'))
       
@@ -169,7 +177,8 @@ submit = (ev) => {
     token: this.state.token,
     email: this.state.email,
     phone: this.state.phone,
-    src: this.state.src
+    src: this.state.src,
+    checkerImage: this.state.checkerImage
   }
 
   if(store.storename.trim() == "" || store.storedescription.trim() == "" || store.storetype.trim() == "" || store.email.trim() == "" || store.address == '')
@@ -284,6 +293,10 @@ reverseGeocodeCoordinates(position) {
                   <h6>Preview</h6>
                   {this.state.checkerImg && <img src={this.state.src} className="setupimg" /> || this.state.checkerImg === null && <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon> || this.state.checkerImg === "loading" && <div className="spin">  <Spinner color="primary" className="spinner" size="sm"/> </div>  }
                   </div>
+                  
+                  <br/>
+                  <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress>
+                  
                   <br/>
                   <br/>
               

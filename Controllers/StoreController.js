@@ -132,7 +132,9 @@ const updateStore = (req, res, next) => {
     }
     StoreProfile.findById(storeID)
     .then((data) => {
-        if(data.src){
+        if(req.body.checkerImage === true){
+        if(data.src){  
+                console.log(req.body.checkerImage)
         const s3 = new aws.S3();
         const imgName = data.src.slice(32)
         const s3Params = {
@@ -142,14 +144,16 @@ const updateStore = (req, res, next) => {
             // ContentType: fileType,
             // ACL: 'public-read'
           };
-          s3.deleteObject(s3Params, function(err, data) {
-              if(err) console.log("image deletion failed"+err, err.stack)
-              else console.log("image deleted") 
-          })
+          
+            s3.deleteObject(s3Params, function(err, data) {
+                if(err) console.log("image deletion failed"+err, err.stack)
+                else console.log("image deleted") 
+            })
         }
-        else{return}
-       
-  })
+          }
+          else{return}
+         
+    })
     .then(() => {
         StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
     .then(() => {
