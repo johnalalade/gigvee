@@ -102,6 +102,7 @@ class Home extends Component {
     this.getCoordinates = this.getCoordinates.bind(this);
     this.handleLocationError = this.handleLocationError.bind(this);
     this.distancer = this.distancer.bind(this);
+    this.getLocation()
   }
 
 
@@ -185,7 +186,7 @@ customSort = (a,b) => {
       this.props.history.replace(`/login`);
     }
     toast.dark('Please Allow Geolocation Permission')
-   this.getLocation()
+   
 
     let token = {token: this.state.token}
     axios.post('/products', token)
