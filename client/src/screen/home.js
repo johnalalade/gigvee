@@ -127,6 +127,7 @@ handleLocationError(error) {
   switch(error.code) {
     case error.PERMISSION_DENIED:
       toast.dark('Please Allow Geolocation Permission')
+      alert('Please Allow Geolocation Permission')
       break;
     case error.POSITION_UNAVAILABLE:
       alert("Location Information Is Unavailable At The Moment, Please Check Data Connection And Try Again.")
