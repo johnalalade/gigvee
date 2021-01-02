@@ -126,8 +126,7 @@ getCoordinates(position) {
 handleLocationError(error) {
   switch(error.code) {
     case error.PERMISSION_DENIED:
-      toast.info("Please Allow Request For Geolocation.")
-      alert("Please Allow Request For Geolocation.")
+      toast.dark('Please Allow Geolocation Permission')
       break;
     case error.POSITION_UNAVAILABLE:
       alert("Location Information Is Unavailable At The Moment, Please Check Data Connection And Try Again.")
@@ -185,9 +184,7 @@ customSort = (a,b) => {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
-    toast.dark('Please Allow Geolocation Permission')
-   
-
+    
     let token = {token: this.state.token}
     axios.post('/products', token)
     
