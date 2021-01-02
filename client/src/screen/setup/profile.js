@@ -88,7 +88,7 @@ pword = (ev) => {
 }
 
 email = (ev) => {
-  let email = ev.target.value;
+  let email = ev.target.value.toLowerCase();
   this.setState({email});
 }
 phoneU = (ev) => {

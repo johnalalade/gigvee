@@ -66,8 +66,6 @@
 }
 .img {
     border-radius: 50%;
-    margin-left: 5em;
-    margin-right: 5em;
     height: 80px;
     width: 80px;
 }
@@ -90,8 +88,6 @@
 .login-div {
     background: whitesmoke;
     /* padding-top: 50px; */
-    padding-bottom: 150px;
-    
 }
 .btn-g {
     padding: 2px;

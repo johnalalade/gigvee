@@ -128,7 +128,7 @@ filer = (ev) => {
     const response = res.data
   uploadFile(this.state.img, response.signedRequest, response.url);
   })
-   }, 2000)
+   }, 500)
   }
 }
 

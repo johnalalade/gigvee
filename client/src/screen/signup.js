@@ -111,10 +111,10 @@ class SignUp extends Component {
           <div className="container-fluid log-con">
             <Row>
               <Col md="6">
-                <div>
-                  <img src={Logo} className="img" alt="logo" />
-                  <h1 className="text">Welcome To GigVee,</h1>
-                  <p className="lead text">making a difference in people...</p>
+              <div className="about-logo">
+                  <img src={Logo} className="img" align="center" alt="logo" />
+                  <h1 className="text" align="center">Welcome To GigVee,</h1>
+                  <p className="lead text" align="center">making a difference in people...</p>
                 </div>
               </Col>
               <Col md="6">
@@ -152,7 +152,7 @@ class SignUp extends Component {
           </div>
           <br />
           {/* about */}
-          <div className="container-fluid">
+          {/* <div className="container-fluid">
 
             <h1 align="center">About GigVee</h1>
             <div className="about-logo">
@@ -189,8 +189,8 @@ class SignUp extends Component {
                 </div>
               </p>
             </div>
-          </div>
-        </div>
+          </div>*/}
+        </div> 
         <div className="bottom">
           <p align="center"> GigVee Team {year.slice(10, 15)}</p>
         </div>

@@ -114,7 +114,7 @@ storeDescription = (ev) => {
   this.setState({storeDescription});
 }
 email = (ev) => {
-  let email = ev.target.value;
+  let email = ev.target.value.toLowerCase();
   this.setState({email});
 }
 phoneU = (ev) => {
@@ -157,7 +157,7 @@ filer = (ev) => {
     const response = res.data
   uploadFile(this.state.img, response.signedRequest, response.url);
   })
-   }, 2000)
+   }, 500)
   }
 }
 
