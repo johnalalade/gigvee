@@ -35,7 +35,7 @@ const Cards = (prop) => {
              <p>Description</p>
              <h6 className="desc">{prop.productDescription}</h6>
             <hr/>
-              <a className="btn btn-primary" onClick={det}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Visit</a>
+              <a className="btn btn-primary form-control" onClick={det}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Visit</a>
            </div>
            {/* <p className="text-muted">{prop.comments[0]}</p> */}
         {/* <input type="text" name="comment" placeholder="write a comment" onChange={

@@ -24,6 +24,9 @@ class SignUp extends Component {
       email: '',
       phone: '',
       password: '',
+      cpassword: '',
+      passwordError: '',
+      cpasswordError: '',
       err: '',
       loaded: 0
     }
@@ -51,7 +54,21 @@ class SignUp extends Component {
   }
   pword = (ev) => {
     let password = ev.target.value;
+    if (this.state.password.length < 7) {
+      this.setState({ passwordError: 'Password too short (8)' })
+    } else {
+      this.setState({ passwordError: 'Password Okay!!!' })
+    }
     this.setState({ password });
+  }
+  cpword = (ev) => {
+    let cpassword = ev.target.value;
+    if (this.state.password === cpassword) {
+      this.setState({ cpasswordError: 'Password Match!!!' })
+    } else {
+      this.setState({ cpasswordError: 'Password does not match!!!' })
+    }
+    this.setState({ cpassword });
   }
   click = (ev) => {
     ev.preventDefault();
@@ -68,16 +85,20 @@ class SignUp extends Component {
       password: this.state.password,
       userName: this.state.email
     }
-    if (user.firstname.trim() == "" || user.lastname.trim() == "" || user.email.trim() == "" || user.phone.trim() == "" || user.password.trim() == "") {
+    if (user.firstname.trim() == "" || user.lastname.trim() == "" || user.email.trim() == "" || user.phone.trim() == "" || user.password.trim() == "" || this.state.cpassword.trim() == "") {
       toast.error('Please All Fields Are Required');
       this.setState({ err: 'Please All Fields Are Required' })
       return false
     }
-    //  else if(user.password.trim().length() < 8) 
-    //  {
-    //   this.setState({err: 'Password should be 8 characters or more'})
-    //   return false
-    // }
+    else if (user.password.trim() !== this.state.cpassword.trim()) {
+      this.setState({ err: 'Password does not match' })
+      toast.error('Password does not match')
+      return false
+    }
+    else if (user.password.trim().length < 8){
+      this.setState({ err: 'Password must be atleast 8 characters' })
+      toast.error('Password must be atleast 8 characters')
+    }
     else {
       axios.post('/register', user, {
         onUploadProgress: ProgressEvent => {
@@ -111,7 +132,7 @@ class SignUp extends Component {
           <div className="container-fluid log-con">
             <Row>
               <Col md="6">
-              <div className="about-logo">
+                <div className="about-logo">
                   <img src={Logo} className="img" align="center" alt="logo" />
                   <h1 className="text" align="center">Welcome To GigVee,</h1>
                   <p className="lead text" align="center">making a difference in people...</p>
@@ -133,15 +154,20 @@ class SignUp extends Component {
                   <input type="tel" name="phone" placeholder="phone number" onChange={this.phone} value={this.state.phone} className="form-control" />
                   {/* password */}
                   <label for="password" className="text"> Enter Password.</label>
+                  {this.state.passwordError && <p className="text">{this.state.passwordError}</p>}
                   <input type="password" name="password" placeholder="Enter password" onChange={this.pword} value={this.state.password} className="form-control" />
+                  {/* confirm password */}
+                  <label for="password" className="text"> Confirm Password.</label>
+                  {this.state.cpasswordError && <p className="text">{this.state.cpasswordError}</p>}
+                  <input type="password" name="password" placeholder="Confirm password" onChange={this.cpword} value={this.state.cpassword} className="form-control" />
                   <br></br>
                   {this.state.loaded &&
                     <Progress max="100" color="success" value={this.state.loaded}>{Math.round(this.state.loaded, 2)}%</Progress>
                   }
                   <br />
                   <p className="text">By signing up, you agree to our <NavLink to="/policy" className="navlink policy">privacy policy</NavLink></p>
-                  <p className="text">Please allow geoloction permission in the next page once you've successfully signed up. For a great experience</p>
-                  <button className="btn btn-success">Sign Up</button>
+                  <p className="text">Please allow geoloction permission in the next page once you've successfully signed up. For a great experience.</p>
+                  <button className="btn btn-success form-control">Sign Up</button>
                   <ToastContainer />
 
                 </Form>
@@ -190,7 +216,7 @@ class SignUp extends Component {
               </p>
             </div>
           </div>*/}
-        </div> 
+        </div>
         <div className="bottom">
           <p align="center"> GigVee Team {year.slice(10, 15)}</p>
         </div>

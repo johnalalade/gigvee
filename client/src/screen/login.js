@@ -86,7 +86,7 @@ class Logins extends Component {
                   <Progress max="100" color="success" value={this.state.loaded}>{Math.round(this.state.loaded, 2)}%</Progress>
                 }
                 <br />
-                <button className="btn btn-success">Login</button>
+                <button className="btn btn-success form-control">Login</button>
                 <ToastContainer />
 
               </Form>

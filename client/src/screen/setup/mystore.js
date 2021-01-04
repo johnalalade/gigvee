@@ -345,7 +345,9 @@ reverseGeocodeCoordinates(position) {
                   <Progress max="100" color="success" value={this.state.loaded}>{Math.round(this.state.loaded,2)}%</Progress>
                   <br/>
                  
-                  <button className="btn btn-success">Save</button>
+                  <button className="btn btn-success form-control">Save</button>
+                  <br/>
+                  <br/>
                   <ToastContainer />
           
               </Form>
@@ -353,7 +355,7 @@ reverseGeocodeCoordinates(position) {
                   
               
               <br/><br/><br/>
-            
+              <br/>
               </Container> 
           
               <Footer id={this.props.match.params.id} />
