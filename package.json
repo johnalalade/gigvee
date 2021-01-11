@@ -1,7 +1,7 @@
 {
-  "name": "exploitsarena",
+  "name": "GigVee",
   "version": "1.0.0",
-  "description": "know your God",
+  "description": "Online Store",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",

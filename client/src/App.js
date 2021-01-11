@@ -29,20 +29,20 @@ function App() {
             <Route exact path='/' component={Welcome}/>
             <Route path='/register' component={SignUp}/>
             <Route path='/login' component={Logins}/>
-            <Route path="/search/:id" component={Search}/>
-            <Route path="/setup/:id" component={SetUp}/>
-            <Route path="/details/:id/:id2"component={Details}/>
-            <Route path="/shop/:id" component={Shops}/>
+            <Route path="/search" component={Search}/>
+            <Route path="/setup" component={SetUp}/>
+            <Route path="/details"component={Details}/>
+            <Route path="/shop" component={Shops}/>
             {/* <Route path="/chat" component={Chat}/> */}
-            <Route path="/home/:id" component={Home}/>
-            <Route path="/notifications/:id" component={Notifications}/>
+            <Route path="/home" component={Home}/>
+            <Route path="/notifications" component={Notifications}/>
 
-            <Route path="/addstock/:id" component={AddStock}/>
-            <Route path="/privacy/:id" component={Setting}/>
-            <Route path="/profile/:id" component={Profile}/>
-            <Route path="/mystore/:id" component={MyStore}/>
-            <Route path="/updatestore/:id" component={UpdateStore}/>
-            <Route path="/aboutus/:id" component={AboutUs}/>
+            <Route path="/addstock" component={AddStock}/>
+            <Route path="/privacy" component={Setting}/>
+            <Route path="/profile" component={Profile}/>
+            <Route path="/mystore" component={MyStore}/>
+            <Route path="/updatestore" component={UpdateStore}/>
+            <Route path="/aboutus" component={AboutUs}/>
             <Route path="/policy" component={Privacy}/>
 
           </Switch>

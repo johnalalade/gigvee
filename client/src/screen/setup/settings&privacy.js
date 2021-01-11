@@ -12,7 +12,7 @@ class Settings extends Component {
         return (
           <div>
             <div>
-              <Header  id={this.props.match.params.id} />
+              <Header  id={this.state.id} />
               <br/><br/>
                <br/><br/>
 <div className="privacy">
@@ -158,7 +158,7 @@ class Settings extends Component {
 </div>
 <br/><br/>
 <br/><br/>
-              <Footer id={this.props.match.params.id} />
+              <Footer id={this.state.id} />
             </div>
             </div>
           );

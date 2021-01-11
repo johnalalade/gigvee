@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faWhatsapp, faGooglePlusG} from '@fortawesome/free-brands-svg-icons';
 
-
+import Moment from 'react-moment';
 import {Spinner} from 'reactstrap';    
 
 import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
@@ -154,9 +154,12 @@ const Cards = (prop, {location}) => {
   return(
      <div>
          <div className="card-bg">
+         <div className="c-top">
            <div>
            <h6>{prop.storeName}</h6>
-             <h5>Product Name: {prop.productName}</h5>
+             <h5 className="h-h5">Product Name: {prop.productName}</h5>
+           </div>
+           <Moment className="datetime" fromNow>{prop.createdAt}</Moment>
            </div>
            <img width="100%" src={prop.img} alt="prod" />
            <div>
@@ -213,6 +216,8 @@ class Details extends Component {
       long1: '',
       book: '',
       note: '',
+      id: localStorage.getItem('id'),
+      id2: localStorage.getItem('id2')
     }
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -233,7 +238,7 @@ distancer = (c) => {
     this.getLocation()
     
 
-    let id = {productID: this.props.match.params.id2, token: this.state.token}
+    let id = {productID: this.state.id2, token: this.state.token}
    
     axios.post('/products/showone', id)
     .then((data) => {
@@ -331,7 +336,7 @@ handleLocationError(error) {
     const commentsHandler = (comm) => {
       console.log(comm);
       let res = {
-        productID: this.props.match.params.id2,
+        productID: this.state.id2,
         comment: comm}
       axios.post('/products/updateone', res)
     }
@@ -340,7 +345,7 @@ handleLocationError(error) {
       <div>
       
         
-           <Header  id={this.props.match.params.id} />
+           <Header  id={this.state.id} />
            <div className="home-div">
 
            <br></br>
@@ -351,7 +356,7 @@ handleLocationError(error) {
              <br></br>
               
                {this.state.product &&
-                  <Cards key={this.state.product.storename} storeName={this.state.product.storename}
+                  <Cards key={this.state.product.storename} createdAt={this.state.product.createdAt} storeName={this.state.product.storename}
                           productName={this.state.product.productName} 
                           img={this.state.product.src}
                           productDescription={this.state.product.productDescription} 
@@ -391,7 +396,7 @@ handleLocationError(error) {
            </div>
            <br/><br/>
              <br/><br/>
-           <Footer id={this.props.match.params.id}/> 
+           <Footer id={this.state.id}/> 
       </div>
     );
   }

@@ -35,6 +35,7 @@ class Notifications extends Component {
       lat1: '',
       user: [], 
       token: localStorage.getItem('token'),
+      id: localStorage.getItem('id')
     }
   }
 
@@ -61,7 +62,7 @@ class Notifications extends Component {
 
   return (
     <div>
-      <Header  id={this.props.match.params.id} />
+      <Header  id={this.state.id} />
       <br></br>
              <br></br>
              <br></br>
@@ -78,7 +79,7 @@ class Notifications extends Component {
             <br></br>
         <ToastContainer />
         </div>
-      <Footer id={this.props.match.params.id} />
+      <Footer id={this.state.id} />
     </div>
   );
   }

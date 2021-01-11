@@ -12,11 +12,12 @@ import Footer from './foot';
 import {Spinner} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import Moment from 'react-moment';
 
 
 
 const Cards = (prop) => {
-  const [comment, setComment] = useState('');
+ // const [comment, setComment] = useState('');
  const det = (ev) => {
     prop.deta(prop.id);
   }
@@ -25,9 +26,12 @@ const Cards = (prop) => {
      <div>
       
          <div className="card-bg">
+         <div className="c-top">
            <div>
            <h6>Store: {prop.storeName}</h6>
-             <h5>Product Name: {prop.productName}</h5>
+             <h5 className="h-h5">Product Name: {prop.productName}</h5>
+           </div>
+           <Moment className="datetime" fromNow>{prop.createdAt}</Moment>
            </div>
            <img width="100%" src={prop.img} alt="prod" />
            <div>
@@ -96,7 +100,8 @@ class Home extends Component {
       long1: '',
       lat1: '',
       loader: 0,
-      products: []
+      products: [],
+      id: localStorage.getItem('id')
     }
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -173,12 +178,24 @@ datefilter = (k) => {
   return k.owner !== "delete"
 }
 customfilter = (u) => {
-  return u.owner !== this.props.match.params.id 
+  return u.owner !== this.state.id 
 }
 // sort
 customSort = (a,b) => {
+  var date1 = new Date(a.createdAt)
+  var date2 = new Date(b.createdAt)
+
+  const picker = Math.round((Math.random() * 10) + 1)
+  
+
+  if(picker % 2 === 0){
   if(a.distance > b.distance) return 1;
   if(a.distance < b.distance) return -1;
+  }
+  else if(picker % 2 !== 0){
+    if(date1.getTime() > date2.getTime()) return -1;
+  if(date1.getTime() < date2.getTime()) return 1;
+  }
   return 0;
 }
   componentDidMount() {
@@ -218,16 +235,17 @@ customSort = (a,b) => {
    
    
    const deta = (id) => {
-      this.props.history.push(`/details/${this.props.match.params.id}/${id}`);
+    localStorage.setItem('id2', id)
+      this.props.history.push(`/details?gigvee=true&product=1`);
     }
 
     return (
       <div>
         
         <div className="head">
-           <Header  id={this.props.match.params.id} />
+           <Header  id={this.state.id} />
            </div>
-          
+           
            {this.state.loader === 0 && <div className="spin">  <Spinner color="primary" className="spinner" size="lg"/> </div>||
             <div  className="home-div homer">
               <br/>
@@ -240,9 +258,9 @@ customSort = (a,b) => {
                <br></br>
                <br></br>
                
-               
+
                 {this.state.products.map((product)=>
-                  <Cards key={product._id} storeName={product.storename}
+                  <Cards key={product._id} createdAt={product.createdAt} storeName={product.storename}
                           productName={product.productName} img={product.src}
                           productDescription={product.productDescription}
                           deta={deta} address={product.location.address}
@@ -257,7 +275,7 @@ customSort = (a,b) => {
               </div>
         }
              
-             <Footer id={this.props.match.params.id} />
+             <Footer id={this.state.id} />
       </div>
     );
   }

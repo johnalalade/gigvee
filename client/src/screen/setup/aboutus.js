@@ -15,7 +15,7 @@ class AboutUs extends Component {
     render() {
         return (
             <div>
-              <Header  id={this.props.match.params.id} />
+              <Header  id={this.state.id} />
               <div className="container-fluid">
                <br/><br/>
                <br/><br/>
@@ -56,7 +56,7 @@ class AboutUs extends Component {
               <br/><br/>
               <br/><br/>
               </div>
-              <Footer id={this.props.match.params.id} /> 
+              <Footer id={this.state.id} /> 
             </div>
           );
     }

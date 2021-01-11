@@ -48,14 +48,15 @@ class SetUp extends Component {
     super(props);
     this.state= {
       profile: {},
-      token: localStorage.getItem('token')
+      token: localStorage.getItem('token'),
+      id: localStorage.getItem('id')
     }
   }
   componentDidMount() {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
      }
-    let user = {userID: this.props.match.params.id, token: this.state.token}
+    let user = {userID: localStorage.getItem('id'), token: this.state.token}
     axios.post('/profiles/showone', user)
     
     .then((data)=>{this.setState({profile: data.data.response})})
@@ -69,7 +70,7 @@ class SetUp extends Component {
     return (
       <div>
         
-           <Header  id={this.props.match.params.id} />
+           <Header  id={this.state.id} />
            {this.state.profile.firstname &&  
            <div className="setup-div">
              <br/>
@@ -83,10 +84,10 @@ class SetUp extends Component {
                   <div className="lists">
                     <h5>{this.state.profile.firstname} {this.state.profile.lastname}</h5>
                     <a className="card-list" onClick={()=>
-                                  this.props.history.push(`/profile/${this.props.match.params.id}`)} >Profile</a> 
+                                  this.props.history.push(`/profile?gigvee=true&product=1`)} >Profile</a> 
                     <hr/>
                     <a className="card-list" onClick={()=>
-                                  this.props.history.push(`/mystore/${this.props.match.params.id}`)} >My Store</a>
+                                  this.props.history.push(`/mystore?gigvee=true&product=1`)} >My Store</a>
                     <hr/>
                      <a className="card-list" onClick={() => {
                        localStorage.clear();
@@ -94,11 +95,11 @@ class SetUp extends Component {
                     }} >Log Out</a>
                     <hr/>
                     <a className="card-list" onClick={()=>
-                                  this.props.history.push(`/privacy/${this.props.match.params.id}`)} >Privacy Policy</a>
+                                  this.props.history.push(`/privacy?gigvee=true&product=1`)} >Privacy Policy</a>
                     <hr/> 
                   </div>
                   <a className=" card-list" onClick={()=>
-                                  this.props.history.push(`/aboutus/${this.props.match.params.id}`)} >About Us</a>
+                                  this.props.history.push(`/aboutus?gigvee=true&product=1`)} >About Us</a>
                </div>
                
               <br></br>
@@ -107,7 +108,7 @@ class SetUp extends Component {
               <ToastContainer />
            </div> 
            || <div className="spin"><Spinner className="spinner" color="primary" size="lg"/></div>}
-           <Footer id={this.props.match.params.id} />
+           <Footer id={this.state.id} />
       </div>
     );
   }

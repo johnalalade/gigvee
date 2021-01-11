@@ -111,7 +111,8 @@ class SignUp extends Component {
         .then((res) => {
           if (res.data.id) {
             localStorage.setItem('token', res.data.token)
-            this.props.history.replace(`/home/${res.data.id}`)
+            localStorage.setItem('id', res.data.id)
+            this.props.history.replace(`/home?gigvee=true&product=1`)
           }
           else { return }
         })

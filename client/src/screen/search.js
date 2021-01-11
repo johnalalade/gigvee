@@ -16,8 +16,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from './foot';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import Moment from 'react-moment';
 
-
+const picker = Math.round((Math.random() * 10) + 1)
 const Placeholder = () => {
   return(
     <div>
@@ -39,9 +40,12 @@ const Cards = (prop) => {
   return(
     <div>
          <div className="card-bg">
+         <div className="c-top">
            <div>
            <h6>Store: {prop.storeName}</h6>
-             <h5>Product Name: {prop.productName}</h5>
+             <h5 className="h-h5">Product Name: {prop.productName}</h5>
+           </div>
+           <Moment className="datetime" fromNow>{prop.createdAt}</Moment>
            </div>
            <img width="100%" src={prop.img} alt="prod" />
            <div>
@@ -49,7 +53,7 @@ const Cards = (prop) => {
              <p>Description</p>
              <h6 className="desc">{prop.productDescription}</h6>
             <hr/>
-              <a className="btn btn-primary" onClick={det}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Visit</a>
+              <a className="btn btn-primary form-control" onClick={det}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Visit</a>
            </div>
            {/* <p className="text-muted">{prop.comments[0]}</p> */}
         {/* <input type="text" name="comment" placeholder="write a comment" onChange={
@@ -106,7 +110,8 @@ class Search extends Component{
       found: null,
       long1: '',
       lat1: '',
-      products: null
+      products: null,
+      id: localStorage.getItem('id')
     }
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -176,7 +181,7 @@ datefilter = (k) => {
 }
 // filter
 customfilter = (u) => {
-  return u.owner !== this.props.match.params.id
+  return u.owner !== this.state.id
 }
 // distancer
 distancer = (c) => {
@@ -186,8 +191,17 @@ distancer = (c) => {
  }
 // sort
 customSort = (a,b) => {
+  var date1 = new Date(a.createdAt)
+  var date2 = new Date(b.createdAt)
+
+  if(picker % 2 === 0){
   if(a.distance > b.distance) return 1;
   if(a.distance < b.distance) return -1;
+  }
+  else if(picker % 2 !== 0){
+    if(date1.getTime() > date2.getTime()) return -1;
+  if(date1.getTime() < date2.getTime()) return 1;
+  }
   return 0;
 }
 
@@ -230,8 +244,15 @@ customSort = (a,b) => {
       res.slice(0,1001)
      return res})
     // .then(conclusion => conclusion.filter(this.customfilter))
-    .then(data => {this.setState({products: data,
-    found: "done"}) 
+    .then(data => {
+      
+      if(data[0]){this.setState({products: data,
+    found: "done"})}
+    else{
+      toast.dark('Sorry, No Product Found')
+      this.setState({products: data,
+        found: null})
+    }
     })
     
     .catch(err => {
@@ -244,12 +265,13 @@ customSort = (a,b) => {
 
   render(){ 
     const deta = (id) => {
-      this.props.history.push(`/details/${this.props.match.params.id}/${id}`);
+      localStorage.setItem('id2', id)
+      this.props.history.push(`/details?gigvee=true&product=1`);
     }
 
   return (
     <div>
-      <Header  id={this.props.match.params.id} />
+      <Header  id={this.state.id} />
       <br/>
       <br/>
       <div className="search-container">
@@ -264,29 +286,28 @@ customSort = (a,b) => {
         <Placeholder /></div> || this.state.found === "searching" && <div className="spin"><Spinner className="spinner" color="primary" size="lg"/> </div> || this.state.found === "done" &&
       //  <Row className="mx-md-5">
       //   <Col>
-     
-         this.state.products.map((product)=>
-         <div  className="home-div">
-             <br></br>
-         <br/><br/>
+      <div className="search-card-div">
+         {this.state.products.map((product)=>
+        
          <div>
-          <Cards key={product._id} storeName={product.storename}
+         
+          <Cards key={product._id} createdAt={product.createdAt} storeName={product.storename}
                  productName={product.productName} img={product.src}
                  productDescription={product.productDescription}
                  deta={deta}  address={product.location.address}
                  comments={product.comments} id={product._id}/>
                  </div>
-                 <br/><br/>
-             <br/><br/>
-                 </div>
-         )
-         
+                 
+           
+                
+         )}
+         </div>
       //   </Col>
 
       //  </Row> 
          }
       <ToastContainer />
-      <Footer id={this.props.match.params.id} />
+      <Footer id={this.state.id} />
     </div>
   );
   }

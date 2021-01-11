@@ -51,7 +51,8 @@ class Shops extends Component {
     this.state = {
       long1: '',
       lat1: '',
-      products: []
+      products: [],
+      id: localStorage.getItem('id')
     }
   }
 
@@ -60,7 +61,7 @@ class Shops extends Component {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
-    let user = {userID: this.props.match.params.id}
+    let user = {userID: localStorage.getItem('id')}
     axios.post('/profiles/showone', user)
    
     .then((response) => response.data.response.bookmarks.map((a) =>{
@@ -108,18 +109,18 @@ class Shops extends Component {
 
     
   const deta = (id) => {
-    this.props.history.push(`/details/${this.props.match.params.id}?uid=${id}`);
+    this.props.history.push(`/details?gigvee=true&product=1`);
     }
 
     return (
      <div>
-       <Header  id={this.props.match.params.id} />
+       <Header  id={this.state.id} />
        
        {this.state.products.map((prod)=>
           <Tiler key={prod.productname} productName={prod.productname} description={prod.productDescription} id={prod.id} img={prod.avatar} storeName={prod.storename} deta={deta} />
        )}
         <ToastContainer />
-        <Footer id={this.props.match.params.id} />
+        <Footer id={this.state.id} />
      </div>
     );
   }

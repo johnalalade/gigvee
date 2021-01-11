@@ -15,11 +15,11 @@ function Header(prop) {
   return (
     <Nav className="header">
   
-     <NavLink activeClassName="current" className="navlink" to={`/setup/${prop.id}`}> <FontAwesomeIcon icon={faBars} size="lg"></FontAwesomeIcon></NavLink>
+     <NavLink activeClassName="current" className="navlink" to={`/setup?gigvee=true&product=1`}> <FontAwesomeIcon icon={faBars} size="lg"></FontAwesomeIcon></NavLink>
     
 
   
-      <NavLink className="navlink" to={`/home/${prop.id}`}><img src={Logo} className="img-h" alt="logo"></img></NavLink>
+      <NavLink className="navlink" to={`/home?gigvee=true&product=1`}><img src={Logo} className="img-h" alt="logo"></img></NavLink>
     
 
   
@@ -33,3 +33,4 @@ function Header(prop) {
 
 export default Header;
 //  <nav className="header">  </nav> 
+// /${prop.id}

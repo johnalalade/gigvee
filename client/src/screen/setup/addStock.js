@@ -53,7 +53,8 @@ class AddStock extends Component {
       email: '', 
       err: '',
       loaded: 0,
-      loaded2: 0
+      loaded2: 0,
+      id: localStorage.getItem('id')
     }
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -65,7 +66,7 @@ componentDidMount(){
   if(!localStorage.getItem('token')){
     this.props.history.replace(`/login`);
   }
-  let user = {storeID:  this.props.match.params.id, token: this.state.token} 
+  let user = {storeID: this.state.id, token: this.state.token} 
   
   axios.post('/store/showone', user)
  
@@ -144,7 +145,7 @@ submit = (ev) => {
   // data.append('filename', this.state.stockImg.name)
   // }
   data.append('src', this.state.src)
-  data.append('owner', this.props.match.params.id)
+  data.append('owner', this.state.id)
   data.append('storename', this.state.storename)
   data.append('storetype', this.state.storetype)
   data.append('productname', this.state.stockName)
@@ -157,7 +158,7 @@ submit = (ev) => {
 
   let stock = {
     src: this.state.src,
-    owner: this.props.match.params.id,
+    owner: this.state.id,
     storename: this.state.storename,
     storetype: this.state.storetype,
     productname: this.state.stockName,
@@ -200,7 +201,7 @@ submit = (ev) => {
            return
          };
       toast.success('Product Add Successfully')})
-  .then(() => this.props.history.replace(`/mystore/${this.props.match.params.id}`))
+  .then(() => this.props.history.replace(`/mystore?gigvee=true&product=1`))
   .catch(err => {toast.error("Upload Failed, Please Try Again. Don't Forget To  Add An Image.")})
   return true
     }
@@ -267,7 +268,7 @@ render() {
     return(
 
         <div>
-          <Header  id={this.props.match.params.id} />
+          <Header  id={this.state.id} />
         <Container className="addstock-div">
           <br/> <br/>
           <br/>
@@ -321,7 +322,7 @@ render() {
               <br></br>
               <br></br>
               </Container>
-              <Footer id={this.props.match.params.id} />
+              <Footer id={this.state.id} />
      </div>
     );
 }

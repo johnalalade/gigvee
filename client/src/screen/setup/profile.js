@@ -35,7 +35,6 @@ class Profile extends Component {
       password: '',
       email: "",
       phone: "",
-      id: "",
       err: "",
       loaded: 0,
       loaded2: 0,
@@ -44,7 +43,8 @@ class Profile extends Component {
       checker: null,
       checkerImg: null,
       checkerImage: false,
-      found: null
+      found: null,
+      id: localStorage.getItem('id')
     }
   }
 
@@ -52,7 +52,7 @@ class Profile extends Component {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
-    let userID = {userID: this.props.match.params.id,token: this.state.token}
+    let userID = {userID: this.state.id,token: this.state.token}
     axios.post('/profiles/showone', userID)
     
     .then((res) => {this.setState({
@@ -170,14 +170,14 @@ submit = (ev) => {
   //   data.append('filename', this.state.img.name)
   // }
   data.append('src', this.state.src)
-  data.append('userID', this.props.match.params.id)
+  data.append('userID', this.state.id)
   data.append('firstname', this.state.firstName)
   data.append('lastname', this.state.lastName)
   data.append('email', this.state.email)
   data.append('phone', this.state.phone)
   
   let user = {
-      userID: this.props.match.params.id,
+      userID: this.state.id,
       firstname: this.state.firstName,
       lastname: this.state.lastName,
       token: this.state.token,
@@ -212,7 +212,7 @@ submit = (ev) => {
        return
      };
     
-   this.props.history.replace(`/setup/${this.props.match.params.id}`)
+   this.props.history.replace(`/setup?gigvee=true&product=1`)
   })
   .then((res) => {toast.success('Update Successful')})
   
@@ -227,7 +227,7 @@ render() {
       const upload = {userID: this.props.match.params.id,files: this.state.files}
         return (
             <div>
-              <Header  id={this.props.match.params.id} />
+              <Header  id={this.state.id} />
               <Container className="profile-div">
               {this.state.found === null && <Spinner className="spinner" color="primary" size="lg"/> || this.state.found === "found" && 
                 <div>
@@ -280,7 +280,7 @@ render() {
                 }
               </Container>
 
-              <Footer id={this.props.match.params.id} />
+              <Footer id={this.state.id} />
             </div>
           );
     }

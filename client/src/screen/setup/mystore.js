@@ -49,11 +49,11 @@ class MyStore extends Component {
       },
       email: "",
       phone: "",
-      id: "",
       err: '', 
       loaded: 0,
       loaded2: 0,
-      found: null
+      found: null,
+      id: localStorage.getItem('id')
     };
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -65,7 +65,7 @@ class MyStore extends Component {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
-    let id = {storeID: this.props.match.params.id, token: this.state.token}
+    let id = {storeID: this.state.id, token: this.state.token}
     axios.post('/store/showone', id)
     .then((res) => {
       //console.log(res);
@@ -173,7 +173,7 @@ submit = (ev) => {
   //   data.append('filename', this.state.img.name)
   // }
   data.append('src', this.state.src)
-  data.append('storeID', this.props.match.params.id)
+  data.append('storeID', this.state.id)
   data.append('storename', this.state.storename)
   data.append('storetype', this.state.storetype)
   data.append('storedescription', this.state.storeDescription)
@@ -184,7 +184,7 @@ submit = (ev) => {
   data.append('phone', this.state.phone)
 
   let store = {
-    storeID: this.props.match.params.id,
+    storeID: this.state.id,
     storename: this.state.storename,
     storetype: this.state.storetype,
     storedescription: this.state.storeDescription,
@@ -226,7 +226,7 @@ submit = (ev) => {
        };
     toast.success('Store Created Successfully')})
   .then(() => window.location.reload())
-  .catch(err => {toast.error("Store Creation Failed, Please "+ err)})
+  .catch(err => {toast.error("Store Creation Failed, please try again "+ err)})
   return true
   
 }
@@ -291,7 +291,7 @@ reverseGeocodeCoordinates(position) {
         return (
           this.state.found === null &&<div className="spin"><Spinner className="spinner" color="primary" size="lg"/> </div> || this.state.found === "found" && <MyStoreDis id={this.props.match.params.id}/> || this.state.found === 'not-found' &&
             <div>
-              <Header  id={this.props.match.params.id} />
+              <Header  id={this.state.id} />
               <Container className="store-div"> 
               <br/><br/>
               <br/><br/>
@@ -339,7 +339,7 @@ reverseGeocodeCoordinates(position) {
                   {this.state.location.address && <h4>Store Address: {this.state.location.address}</h4>}
                   <br/>
                   {/* <Progress max="100" color="success" value={this.state.loaded2}>Getting Current Location{Math.round(this.state.loaded2,2)}%</Progress> */}
-                  <button onClick={this.getLocation} className="btn btn-primary form-control">Get Current Location</button>
+                  <a onClick={this.getLocation} className="btn btn-primary form-control">Get Current Location</a>
                             <br></br>
                             <br></br>
                   <Progress max="100" color="success" value={this.state.loaded}>{Math.round(this.state.loaded,2)}%</Progress>
@@ -358,7 +358,7 @@ reverseGeocodeCoordinates(position) {
               <br/>
               </Container> 
           
-              <Footer id={this.props.match.params.id} />
+              <Footer id={this.state.id} />
             </div>
         
            

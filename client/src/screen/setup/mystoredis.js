@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Header from '../header';
 
-// import '/Users/user/Desktop/bro AY/exploits/backend/uploads';
-
 import './setup.css';
 import axios from 'axios';
 import { ToastContainer, toast} from 'react-toastify';
@@ -11,10 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Footer from '../foot';
 
-import Col from 'reactstrap/lib/Col';
+//import Col from 'reactstrap/lib/Col';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import Moment from 'react-moment';
 
 const Cards = (prop) => {
   
@@ -26,9 +24,12 @@ const Cards = (prop) => {
     <div>
        
          <div className="card-bg">
+           <div className="c-top">
            <div>
              <h6>{prop.storeName}</h6>
-             <h5>{prop.productName}</h5>
+             <h5 className="h-h5">{prop.productName}</h5>
+           </div>
+           <Moment className="datetime" fromNow>{prop.createdAt}</Moment>
            </div>
            <img width="100%" src={prop.img} alt="prod" />
            <div>
@@ -55,7 +56,8 @@ class MyStoreDis extends Component {
       token: localStorage.getItem('token'),
       products: null,
       store: {},
-      address: ""
+      address: "",
+      id: localStorage.getItem('id')
     }
   }
 // dateChecker
@@ -86,7 +88,7 @@ datefilter = (k) => {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
-    let store = {storeID: this.props.id, token: this.state.token}
+    let store = {storeID: this.state.id, token: this.state.token}
     axios.post('/store/showone', store)
     
     .then((data) => { 
@@ -96,7 +98,7 @@ datefilter = (k) => {
       address: data.data.response.location.address
     })})
 
-    let prod = {ownerId: this.props.id, token: this.state.token}
+    let prod = {ownerId: this.state.id, token: this.state.token}
     axios.post('/products/myproducts', prod)
     .then((data) => {return data.data.response})
     .then(ans => ans.map(this.dateChecker))
@@ -120,7 +122,7 @@ datefilter = (k) => {
       }
         return (
             <div>
-              <Header id={this.props.id} />
+              <Header id={this.state.id} />
               <br/> <br/>
               <br/>
            <div className="store">
@@ -137,11 +139,11 @@ datefilter = (k) => {
                     <h6 className="card-list">Address: {this.state.address}</h6>
                   <br/>
                     <a className="btn btn-primary" onClick={()=>
-                                  window.location =`/updatestore/${this.props.id}`} >Update</a>
+                                  window.location =`/updatestore?gigvee=true&product=1`} >Update</a>
 
                   <br/>
                    <a className="btn btn-outline-success" onClick={()=>
-                                  window.location = `/addstock/${this.props.id}`} >Add Product</a>  
+                                  window.location = `/addstock?gigvee=true&product=1`} >Add Product</a>  
                                
                   </div>
                   
@@ -153,7 +155,7 @@ datefilter = (k) => {
                     <p>Products will be deleted after 30 days</p>
                   {this.state.products && 
                 this.state.products.map((product) => 
-                  <Cards key={product._id} storeName={product.storename} productName={product.productName} img={product.src} productDescription={product.productDescription} deta={deta} id={product._id} />
+                  <Cards key={product._id} createdAt={product.createdAt} storeName={product.storename} productName={product.productName} img={product.src} productDescription={product.productDescription} deta={deta} id={product._id} />
                 )
                 || <p>No products yet</p>}  
                
@@ -162,7 +164,7 @@ datefilter = (k) => {
              </div>
              <br/>
              
-              <Footer id={this.props.id} />
+              <Footer id={this.state.id} />
             </div>
             );
     }

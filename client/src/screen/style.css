@@ -53,6 +53,10 @@
     align-items: center;
     background: black; 
 }
+.c-top{
+    display: flex;
+    justify-content: space-between;
+}
 .c-img {
     height: 300px;
     max-width: 100vw;
@@ -214,6 +218,18 @@ a.current {
 }
 
 @media (max-width: 576px) {
+    .search-card-div{
+        padding-top: +50px;
+        background-color: rgba(255, 69, 0, 0.5);
+        padding-bottom: +30px;
+    }
+    .h-h5{
+        font-size: 17px;
+    }
+    .datetime{
+        font-size: 15px;
+        word-spacing: 1px;
+    }
     .log-con{
         padding-top: 10px;
        
@@ -257,6 +273,15 @@ a.current {
     .search-panel{
         right: 300px;
         left: auto; 
+    }
+    .search-card-div{
+        padding-top: +50px;
+        padding-bottom: +30px;
+        background-color: rgba(255, 69, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     .card-bg{
         width: 50vw;

@@ -33,12 +33,13 @@ class UpdateStore extends Component {
       },
       email: "",
       phone: "",
-      id: "",
+     
       token: localStorage.getItem('token'),
       err: '',
       loaded: 0,
       loaded2: 0,
-      found: null
+      found: null,
+      id: localStorage.getItem('id')
     };
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -50,7 +51,7 @@ class UpdateStore extends Component {
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
     }
-    let id = {storeID: this.props.match.params.id, token: this.state.token}
+    let id = {storeID: this.state.id, token: this.state.token}
     axios.post('/store/showone', id)
     .then((res) => {this.setState({
       src: res.data.response.src,
@@ -154,7 +155,7 @@ submit = (ev) => {
   //   data.append('filename', this.state.img.name)
   // }
   data.append('src', this.state.src)
-  data.append('storeID', this.props.match.params.id)
+  data.append('storeID', this.state.id)
   data.append('storename', this.state.storeName)
   data.append('storetype', this.state.storeType)
   data.append('storedescription', this.state.storeDescription)
@@ -166,7 +167,7 @@ submit = (ev) => {
   
 
   let store = {
-    storeID: this.props.match.params.id,
+    storeID: this.state.id,
     avatar: this.state.img,
     storename: this.state.storeName,
     storetype: this.state.storeType,
@@ -206,7 +207,7 @@ submit = (ev) => {
       toast.error('Update failed, please try again')
          return
        };
-    this.props.history.replace(`/mystore/${this.props.match.params.id}`)
+    this.props.history.replace(`/mystore?gigvee=true&product=1`)
   })
     .then((res) => {toast.success('Update Successful')})
   .catch(err => {toast.error("Update Failed, Please Try Again. "+ err)})
@@ -274,7 +275,7 @@ reverseGeocodeCoordinates(position) {
         return (
           
             <div>
-              <Header  id={this.props.match.params.id} />
+              <Header  id={this.state.id} />
               <Container className="store-div">
                 {this.state.found === null && <div className="spin"> <Spinner className="spinner" color="primary" size="lg"/> </div>|| this.state.found === "found" && 
 
@@ -322,7 +323,7 @@ reverseGeocodeCoordinates(position) {
 
                   {/* <Progress max="100" color="success" value={this.state.loaded2}>Getting Current Location{Math.round(this.state.loaded2,2)}%</Progress> */}
 
-                  <button onClick={this.getLocation} className="btn btn-primary form-control">Get Current Location</button>
+                  <a onClick={this.getLocation} className="btn btn-primary form-control">Get Current Location</a>
                             <br></br>
                             <br></br>
                   {this.state.loaded &&
@@ -338,7 +339,7 @@ reverseGeocodeCoordinates(position) {
                }
               </Container>
           
-              <Footer id={this.props.match.params.id} />
+              <Footer id={this.state.id} />
             </div>
            
           );
