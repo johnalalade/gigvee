@@ -26,6 +26,7 @@ const Cards = (prop) => {
      <div>
       
          <div className="card-bg">
+         <br/>
          <div className="c-top">
            <div>
            <h6>Store: {prop.storeName}</h6>
@@ -178,7 +179,7 @@ datefilter = (k) => {
   return k.owner !== "delete"
 }
 customfilter = (u) => {
-  return u.owner !== this.state.id 
+  return u.owner !== this.props.match.params.id 
 }
 // sort
 customSort = (a,b) => {
@@ -248,9 +249,7 @@ customSort = (a,b) => {
            
            {this.state.loader === 0 && <div className="spin">  <Spinner color="primary" className="spinner" size="lg"/> </div>||
             <div  className="home-div homer">
-              <br/>
-              <br/>
-              <br/>
+              
              
               {/* <Row className="mx-md-5"> */}
                {/* <Col> */}

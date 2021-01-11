@@ -73,10 +73,11 @@ class SetUp extends Component {
            <Header  id={this.state.id} />
            {this.state.profile.firstname &&  
            <div className="setup-div">
-             <br/>
+            
              <br/>
              <br/>
             <div className="card-bg-setup">
+            <br/>
                  <div className="img-card">
                  {this.state.profile.src && <img src={this.state.profile.src} className="setupimg" alt="profile img" /> || <FontAwesomeIcon icon={faUser} size='lg'></FontAwesomeIcon> }
                   </div>

@@ -154,6 +154,7 @@ const Cards = (prop, {location}) => {
   return(
      <div>
          <div className="card-bg">
+         <br/>
          <div className="c-top">
            <div>
            <h6>{prop.storeName}</h6>
@@ -348,9 +349,7 @@ handleLocationError(error) {
            <Header  id={this.state.id} />
            <div className="home-div">
 
-           <br></br>
-             <br></br>
-             <br></br>
+          
             <div>
             <br></br>
              <br></br>
