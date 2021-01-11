@@ -179,7 +179,7 @@ datefilter = (k) => {
   return k.owner !== "delete"
 }
 customfilter = (u) => {
-  return u.owner !== this.props.match.params.id 
+  return u.owner !== this.state.id 
 }
 // sort
 customSort = (a,b) => {
