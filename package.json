@@ -1,7 +1,7 @@
 {
   "name": "GigVee",
   "version": "1.0.0",
-  "description": "Online Store",
+  "description": "Online Market",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
