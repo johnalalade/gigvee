@@ -172,7 +172,7 @@ class Welcome extends Component {
                             <br />
                   We hope you enjoy your journey into a better business experience......
                   <br />
-                            <span className="quote">~GigVee team</span>
+                            <span className="quote">~John Alalade</span>
                             <br />
                             <div align='center'>
                                 <Button className="btn btn-success" onClick={this.log}>Get Started</Button>
