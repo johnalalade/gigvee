@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../header';
 import Footer from '../foot';
+import Logo from './n.jpg';
 
 class Settings extends Component {
   componentDidMount() {

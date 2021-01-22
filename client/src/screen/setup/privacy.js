@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Logo from './n.jpg';
 
 class Privacy extends Component {
   render() {
