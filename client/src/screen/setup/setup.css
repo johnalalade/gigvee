@@ -106,7 +106,7 @@
     }
     .store-div {
         background-color: rgba(255, 69, 0, 0.5);
-        height: 200vh;
+        min-height: 200vh;
     }
     .spinner {
    margin: 350px;
