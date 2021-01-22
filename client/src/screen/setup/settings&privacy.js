@@ -4,6 +4,12 @@ import Footer from '../foot';
 import Logo from './n.jpg';
 
 class Settings extends Component {
+  constructor() {
+    super();
+    this.state = {
+      id: localStorage.getItem('id')
+    }
+  }
   componentDidMount() {
     if (!localStorage.getItem('token')) {
       this.props.history.replace(`/login`);

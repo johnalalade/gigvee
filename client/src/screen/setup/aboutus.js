@@ -7,6 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 
 class AboutUs extends Component {
+   constructor() {
+    super();
+    this.state = {
+      id: localStorage.getItem('id')
+    }
+  }
   componentDidMount(){
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
