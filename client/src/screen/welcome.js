@@ -7,7 +7,7 @@ import Slide4 from '../images/anywhere.jpeg';
 import './style.css';
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
+import { faGooglePlusG, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import Typewriter from 'react-simple-typewriter';
 import 'react-simple-typewriter/dist/index.css';
 import {
@@ -172,7 +172,7 @@ class Welcome extends Component {
                             <br />
                   We hope you enjoy your journey into a better business experience......
                   <br />
-                            <span className="quote">~John Alalade</span>
+                            <span className="quote">~John Alalade  <a href="twitter.com/@Agathos7"><FontAwesomeIcon icon={faTwitter} size='lg' className="btn-danger btn-g"></FontAwesomeIcon></a></span>
                             <br />
                             <div align='center'>
                                 <Button className="btn btn-success" onClick={this.log}>Get Started</Button>
