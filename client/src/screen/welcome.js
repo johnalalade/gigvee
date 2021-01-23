@@ -172,7 +172,10 @@ class Welcome extends Component {
                             <br />
                   We hope you enjoy your journey into a better business experience......
                   <br />
-                            <span className="quote">~John Alalade  <a href="twitter.com/@Agathos7"><FontAwesomeIcon icon={faTwitter} size='lg' className="btn-danger btn-g"></FontAwesomeIcon></a></span>
+                            <span className="quote">~John Alalade
+                            <div className="quote-icons"><a href="https://twitter.com/@Agathos7" target="_blank"><FontAwesomeIcon icon={faTwitter} size='lg'></FontAwesomeIcon></a> 
+                            <a href="mailto:johnalalade3@gmail.com">
+                                    <FontAwesomeIcon icon={faGooglePlusG} size='lg' color="red"></FontAwesomeIcon></a></div></span>
                             <br />
                             <div align='center'>
                                 <Button className="btn btn-success" onClick={this.log}>Get Started</Button>
