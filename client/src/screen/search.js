@@ -61,7 +61,11 @@ const Cards = (prop) => {
                          setComment(comment); }} value={comment} className="form-control" />
                          <button onClick={() => prop.comments.unShift(comment)}>comment</button> */}
           
-          <h6 className="add">Address: {prop.address}</h6>
+          <div className="add">
+            <hr/>
+          <h6 align="center">Address: {prop.address}</h6>
+           <hr/>
+          </div>
          </div>
          <br></br>
      </div>    
