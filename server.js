@@ -7,6 +7,7 @@ require('dotenv').config();
 const cors = require('cors');
 const path = require('path');
 const aws = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
 
 // const profileRoute = require('./Routes/userProfileRoutes');
 const storeRoute = require('./Routes/StoreRoutes');
@@ -72,7 +73,7 @@ app.post('/sign-s3', (req, res) => {
   const s3 = new aws.S3();
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
-  const imgName = 'gigvee'+'-'+Date.now()+fileName
+  const imgName = 'gigvee'+'-'+Date.now()+fileName+uuidv4()
   const s3Params = {
     Bucket: S3_BUCKET,
     Key: imgName,

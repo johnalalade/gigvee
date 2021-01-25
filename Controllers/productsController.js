@@ -181,7 +181,7 @@ const updateProduct = (req, res, next) => {
     })
 }
 
-// delete store
+// delete product
 
 const deleteProduct = (req, res, next) => {
     let productID = req.body.product

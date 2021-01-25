@@ -89,7 +89,7 @@ const addStore = (req, res, next) => {
     })
 }
 
-// update store
+// update-subscription-date for store
 const dateStore = (req, res, next) => {
     let storeID = req.body.storeID
 
