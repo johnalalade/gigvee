@@ -74,7 +74,7 @@ const login = (req, res, next)=> {
                 }
                 if(result) {
                     let token = jwt.sign({name: user.name},"Iyaaduke+5")
-                    console.log(user)
+                    // console.log(user)
                     res.json({
                         message: "Login Succesful",
                         token,

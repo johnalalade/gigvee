@@ -308,7 +308,7 @@ render() {
                   <h4>Do you wish to use Current Location instead?</h4>
         <br/>
                   {/* <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress> */}
-                  <button onClick={this.getLocation} className="btn btn-primary form-control">Get Current Location</button>
+                  <a onClick={this.getLocation} className="btn btn-primary form-control">Get Current Location</a>
 
                             <br></br>
                             <br></br>

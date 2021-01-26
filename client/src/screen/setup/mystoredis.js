@@ -121,7 +121,15 @@ class MyStoreDis extends Component {
       toast.success('Deleting, please wait...')
       axios.post('/products/deleteone', todele)
         .then(() => toast.success('Delete Successful.'))
-        .then(() => window.location.reload())
+        .then(() => this.setState(
+          prevState => {
+            return {
+            products: prevState.products.filter((u) => {
+              return u._id !== id 
+            })
+          }
+        }
+        ))
     }
     return (
       <div>
