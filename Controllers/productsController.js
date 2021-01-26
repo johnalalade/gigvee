@@ -185,7 +185,7 @@ const updateProduct = (req, res, next) => {
 
 const deleteProduct = (req, res, next) => {
     let productID = req.body.product
-    console.log(productID)
+   // console.log(productID)
     Products.findByIdAndRemove(productID)
     .then((response) => {
 
