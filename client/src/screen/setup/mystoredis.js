@@ -87,7 +87,7 @@ class MyStoreDis extends Component {
   componentDidMount() {
     if (!localStorage.getItem('token')) {
       this.props.history.replace(`/login`);
-    }
+    } 
     let store = { storeID: this.state.id, token: this.state.token }
     axios.post('/store/showone', store)
 
