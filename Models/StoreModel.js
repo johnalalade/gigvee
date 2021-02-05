@@ -28,8 +28,8 @@ const storeSchema = new Schema({
         type: String
     },
     sub: {type: Number},
-    subDate: {type: Date}
-
+    subDate: {type: Date},
+    comments: []
 
 }, {timestamps: true});
 

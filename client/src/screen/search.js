@@ -33,8 +33,20 @@ const Placeholder = () => {
 
 const Cards = (prop) => {
   const [comment, setComment] = useState('');
- const det = (ev) => {
+
+  const det = (ev) => {
     prop.deta(prop.id);
+  }
+  const commenter = () => {
+    if (comment.trim() === '') {
+      return
+    }
+    else {
+      prop.comm(comment, prop.owner)
+      prop.comments.unshift(comment)
+      setComment('')
+    }
+
   }
   
   return(
@@ -55,12 +67,16 @@ const Cards = (prop) => {
             <hr/>
               <a className="btn btn-primary form-control" onClick={det}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Visit</a>
            </div>
-           {/* <p className="text-muted">{prop.comments[0]}</p> */}
-        {/* <input type="text" name="comment" placeholder="write a comment" onChange={
-                (ev) => {let comment = ev.target.value;
-                         setComment(comment); }} value={comment} className="form-control" />
-                         <button onClick={() => prop.comments.unShift(comment)}>comment</button> */}
-          
+           <p>Comments</p>
+        <p className="comment">{prop.comments[0] && prop.comments[0] || "No comments on this store yet"}</p>
+        <div className="commenting">
+          <textarea type="text" name="comment" placeholder="comment on this store..." onChange={
+            (ev) => {
+              let comment = ev.target.value;
+              setComment(comment);
+            }} value={comment} className="form-control" ></textarea>                        
+             <button className="btn btn-warning" onClick={commenter}>comment</button>
+        </div>
           <div className="add">
             <hr/>
           <h6 align="center">Address: {prop.address}</h6>
@@ -208,7 +224,17 @@ customSort = (a,b) => {
   }
   return 0;
 }
-
+commentFixer = (d) => {
+  axios.post('/store/showone', { token: this.state.token, storeID: d.owner })
+    .then(data => {
+      d.comments = data.data.response.comments
+      return d.comments
+    })
+    .catch(err => {
+      d.comments = ['No comments on this store']
+      return
+    })
+}
 
   componentDidMount (){
     if(!localStorage.getItem('token')){
@@ -247,6 +273,10 @@ customSort = (a,b) => {
      .then((res) => {
       res.slice(0,1001)
      return res})
+     .then(info => {
+      info.forEach(this.commentFixer)
+      return info
+    })
     // .then(conclusion => conclusion.filter(this.customfilter))
     .then(data => {
       
@@ -272,6 +302,17 @@ customSort = (a,b) => {
       localStorage.setItem('id2', id)
       this.props.history.push(`/details?gigvee=true&product=1`);
     }
+    const comm = (comment, owner) => {
+      let comm = {
+        token: this.state.token,
+        storeID: owner,
+        comment: comment
+      }
+      axios.post('/store/comment', comm)
+        .then(() => toast.success("Comment added"))
+        .catch((err) => toast.error("Comment error " + err))
+    }
+
 
   return (
     <div>
@@ -298,8 +339,8 @@ customSort = (a,b) => {
           <Cards key={product._id} createdAt={product.createdAt} storeName={product.storename}
                  productName={product.productName} img={product.src}
                  productDescription={product.productDescription}
-                 deta={deta}  address={product.location.address}
-                 comments={product.comments} id={product._id}/>
+                 deta={deta} comm={comm} address={product.location.address}
+                 comments={product.comments} owner={product.owner} id={product._id}/>
                  </div>
                  
            

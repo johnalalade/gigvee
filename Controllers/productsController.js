@@ -93,7 +93,8 @@ const addProduct = (req, res, next) => {
         phone: req.body.phone,
         email: req.body.email, 
         distance: '',
-        src: req.body.src
+        src: req.body.src,
+        comments: []
 
     })
     // if(req.files) {

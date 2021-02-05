@@ -71,8 +71,8 @@ const addStore = (req, res, next) => {
         phone: req.body.phone,
         sub: 2,
         subDate: Date.now(),
-        src: req.body.src
-
+        src: req.body.src,
+        comments: []
     })
    
     store.save()
@@ -189,6 +189,53 @@ const deleteStore = (req, res, next) => {
     })
 }
 
+// commenting
+const commenting = (req, res, next) =>{
+    let storeID =  req.body.storeID
+    let comment = req.body.comment
+    let comments
+    StoreProfile.findById(storeID)
+    .then((data) => {
+       let comm = data.comments
+       
+       //console.log(comment)
+    //    console.log(comm)
+    //    console.log(comment)
+       if(comm){
+        comments = [comment,...comm]
+        
+       }
+       else{
+           comments = [comment]
+       }
+      
+      let updatedStore = {
+       comments: comments.slice(0,51)
+    }
+    console.log(updatedStore.comments)
+    StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
+    .then(() => {
+        console.log({
+            message: "Comment Add Successfully"
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: "An Error Occured"+ error
+        })
+    })
+
+    })
+    .then(() => {
+        res.json({
+            message: "Comment Add Successfully"
+        })
+    })
+    .catch(err => console.error("Error Ooo! " + err))
+    
+    
+    
+}
 module.exports = {
-    indexStore, showStore, updateStore, deleteStore, addStore, searchStore
+    indexStore, showStore, updateStore, deleteStore, addStore, searchStore, commenting
 }

@@ -8,7 +8,7 @@ import './style.css';
 import axios from 'axios';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import  ScrollToBottom from 'react-scroll-to-bottom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faWhatsapp, faGooglePlusG} from '@fortawesome/free-brands-svg-icons';
@@ -136,9 +136,16 @@ const distance = (long1, lat1, long2, lat2) => {
 const Cards = (prop, {location}) => {
   const [comment, setComment] = useState('');
 
-  const commenter = (ev) => {
-    ev.preventDefault();
-    prop.commentsHandler(comment);
+  const commenter = () => {
+    if (comment.trim() === '') {
+      return
+    }
+    else {
+      prop.comm(comment, prop.owner)
+      prop.comments.unshift(comment)
+      setComment('')
+    }
+
   }
 //  const distanceCall = () => distance(prop.long1, prop.lat1, prop.long2, prop.lat2)
   
@@ -175,14 +182,22 @@ const Cards = (prop, {location}) => {
             <hr/>
            
             </div>
-           {/* <CardFooter className="text-muted">{prop.comments}</CardFooter>
-          <CardFooter><input type="text" name="comment" placeholder="write a comment" 
-          onChange={ (ev) => {let comment = ev.target.value;
-                     setComment(comment); }} 
-                     value={comment} 
-                     className="form-control" />
-                         <Button onClick={commenter}>comment</Button>
-          </CardFooter> */}
+            <p>Comments</p>
+            {prop.comments[0] && prop.comments.slice(0,5).map(comment =>
+            <div>
+              <p className="comment">{comment}</p>
+              </div>
+              )
+            || "No comments on this store yet"}
+        
+        <div className="commenting">
+          <textarea type="text" name="comment" placeholder="comment on this store..." onChange={
+            (ev) => {
+              let comment = ev.target.value;
+              setComment(comment);
+            }} value={comment} className="form-control" ></textarea>                        
+             <button className="btn btn-warning" onClick={commenter}>comment</button>
+        </div>
           <div>
           <div className="add">
             <hr/>
@@ -232,6 +247,18 @@ distancer = (c) => {
   return c.distance
  }
 
+ commentFixer = (d) => {
+  axios.post('/store/showone', { token: this.state.token, storeID: d.owner })
+    .then(data => {
+      d.comments = data.data.response.comments
+      return d.comments
+    })
+    .catch(err => {
+      d.comments = ['No comments on this store']
+      return
+    })
+}
+
   componentDidMount(){
     if(!localStorage.getItem('token')){
       this.props.history.replace(`/login`);
@@ -245,6 +272,10 @@ distancer = (c) => {
     .then((data) => {
       this.distancer(data.data.response)
       return data.data.response})
+      .then(info => {
+        this.commentFixer(info)
+        return info
+      })
     .then(data => {this.setState({product: data})})
     // .then(res => console.log(this.state.product))
     .catch(err => {toast.error("Couldn't Get Data, Please Try Again."+ err)})
@@ -334,12 +365,15 @@ handleLocationError(error) {
     
     
     // comments
-    const commentsHandler = (comm) => {
-      console.log(comm);
-      let res = {
-        productID: this.state.id2,
-        comment: comm}
-      axios.post('/products/updateone', res)
+    const comm = (comment, owner) => {
+      let comm = {
+        token: this.state.token,
+        storeID: owner,
+        comment: comment
+      }
+      axios.post('/store/comment', comm)
+        .then(() => toast.success("Comment added"))
+        .catch((err) => toast.error("Comment error " + err))
     }
   
     return (
@@ -359,7 +393,6 @@ handleLocationError(error) {
                           productName={this.state.product.productName} 
                           img={this.state.product.src}
                           productDescription={this.state.product.productDescription} 
-                          commentsHandler={commentsHandler}
                           dis={this.state.product.distance}
                           phone={this.state.product.phone} 
                           email={this.state.product.email} 
@@ -383,7 +416,8 @@ handleLocationError(error) {
                          lat2={this.state.product.location.latitude}
                          lng2={this.state.product.location.longitude}
                          address={this.state.product.location.address}
-                          lat1={this.state.lat1}
+                         comm={comm}  comments={this.state.product.comments}
+                          lat1={this.state.lat1} owner={this.state.product.owner}
                           lng1={this.state.long1}/> || <div className="spin"> <Spinner color="primary" className="spinner" size="lg"/>
                           </div>
                }
