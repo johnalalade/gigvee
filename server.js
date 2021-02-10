@@ -82,13 +82,13 @@ app.post('/sign-s3', (req, res) => {
     ACL: 'public-read'
   };
 
-  // aws.config.getCredentials(function(err) {
-  //   if (err) console.log(err.stack);
-  //   // credentials not loaded
-  //   else {
-  //     console.log("Access key:", aws.config.credentials.accessKeyId);
-  //   }
-  // });
+  aws.config.getCredentials(function(err) {
+    if (err) console.log(err.stack);
+    // credentials not loaded
+    else {
+      console.log("Access key:", aws.config.credentials.accessKeyId);
+    }
+  });
 
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if(err){
