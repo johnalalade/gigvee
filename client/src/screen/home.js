@@ -174,7 +174,7 @@ class Home extends Component {
 
     var difference_In_Days = difference_In_Time / (1000 * 3600 * 24)
 
-    if (difference_In_Days >= 30) {
+    if (difference_In_Days >= 10) {
       let todele = { product: c._id, token: this.state.token }
       axios.post('/products/deleteone', todele)
       return c = { owner: "delete" }
