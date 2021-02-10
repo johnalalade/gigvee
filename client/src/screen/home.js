@@ -27,7 +27,7 @@ const Cards = (prop) => {
       return
     }
     else {
-      prop.comm(comment, prop.owner)
+      prop.comm(comment, prop.id)
       prop.comments.unshift(comment)
       setComment('')
     }
@@ -46,7 +46,7 @@ const Cards = (prop) => {
           </div>
           <Moment className="datetime" fromNow>{prop.createdAt}</Moment>
         </div>
-        <img width="100%" src={prop.img} alt="prod" />
+        <img width="100%" src={prop.img} alt="prod" className="product-img"/>
         <div>
           <hr />
           <p>Description</p>
@@ -55,9 +55,9 @@ const Cards = (prop) => {
           <a className="btn btn-primary form-control" onClick={det}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Visit</a>
         </div>
         <p>Comments</p>
-        <p className="comment">{prop.comments[0] && prop.comments[0] || "No comments on this store yet"}</p>
+        <p className="comment">{prop.comments[0] && prop.comments[0] || "No comments on this product yet"}</p>
         <div className="commenting">
-          <textarea type="text" name="comment" placeholder="comment on this store..." onChange={
+          <textarea type="text" name="comment" placeholder="comment on this product..." onChange={
             (ev) => {
               let comment = ev.target.value;
               setComment(comment);
@@ -216,17 +216,17 @@ class Home extends Component {
     return 0;
   }
 
-  commentFixer = (d) => {
-    axios.post('/store/showone', { token: this.state.token, storeID: d.owner })
-      .then(data => {
-        d.comments = data.data.response.comments
-        return d.comments
-      })
-      .catch(err => {
-        d.comments = ['No comments on this store']
-        return
-      })
-  }
+  // commentFixer = (d) => {
+  //   axios.post('/store/showone', { token: this.state.token, storeID: d.owner })
+  //     .then(data => {
+  //        d.comments = [...data.data.response.comments]
+  //        return d
+  //     })
+  //     .catch(err => {
+  //       d.comments = ['No comments on this store']
+  //       return d
+  //     })
+  // }
   componentDidMount() {
     if (!localStorage.getItem('token')) {
       this.props.history.replace(`/login`);
@@ -255,12 +255,14 @@ class Home extends Component {
 
       .then(conclusion => conclusion.filter(this.customfilter))
       .then(dd => dd.filter(this.datefilter))
-      .then(info => {
-        info.forEach(this.commentFixer)
-        return info
-      })
+      // .then(info => {
+      //   info.forEach(this.commentFixer)
+        
+      //   return info
+
+      // })
       .then(data => {
-        //console.log(data)
+        
         this.setState({ loader: 1 });
         this.setState({ products: data })
       })
@@ -278,13 +280,13 @@ class Home extends Component {
       localStorage.setItem('id2', id)
       this.props.history.push(`/details?gigvee=true&product=1`);
     }
-    const comm = (comment, owner) => {
+    const comm = (comment, id) => {
       let comm = {
         token: this.state.token,
-        storeID: owner,
+        productID: id,
         comment: comment
       }
-      axios.post('/store/comment', comm)
+      axios.post('/products/comment', comm)
         .then(() => toast.success("Comment added"))
         .catch((err) => toast.error("Comment error " + err))
     }

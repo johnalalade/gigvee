@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 import Footer from '../foot';
-
+// import ScrollToBottom from 'react-scroll-to-bottom'
 //import Col from 'reactstrap/lib/Col';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,6 +39,16 @@ const Cards = (prop) => {
 
           <a className="btn btn-danger" onClick={det}>Delete</a>
         </div>
+        <p>Comments({prop.comments.length})</p>
+            {prop.comments[0] && prop.comments.slice(0,11).reverse().map(comment =>
+            <div className="scroll">
+             
+              <p className="comment">{comment}</p>
+              
+              
+              </div>
+              )
+            || "No comments on this product yet"}
         {/* <CardFooter className="text-muted">{prop.comments}</CardFooter> */}
 
       </div>
@@ -166,7 +176,7 @@ class MyStoreDis extends Component {
           <p>Products will be deleted after 30 days</p>
           {this.state.products &&
             this.state.products.map((product) =>
-              <Cards key={product._id} createdAt={product.createdAt} storeName={product.storename} productName={product.productName} img={product.src} productDescription={product.productDescription} deta={deta} id={product._id} />
+              <Cards key={product._id} createdAt={product.createdAt} storeName={product.storename} productName={product.productName} img={product.src} productDescription={product.productDescription} deta={deta} id={product._id} comments={product.comments}/>
             )
             || <p>No products yet</p>}
 

@@ -215,8 +215,55 @@ const deleteProduct = (req, res, next) => {
     })
 }
 
+// commenting
+const commenting = (req, res, next) =>{
+    let productID =  req.body.productID
+    let comment = req.body.comment
+    let comments
+    Products.findById(productID)
+    .then((data) => {
+       let comm = data.comments
+       
+       //console.log(comment)
+    //    console.log(comm)
+    //    console.log(comment)
+       if(comm){
+        comments = [comment,...comm]
+        
+       }
+       else{
+           comments = [comment]
+       }
+      
+      let updatedProduct = {
+       comments: comments.slice(0,51)
+    }
+    console.log(updatedProduct.comments)
+    Products.findByIdAndUpdate(productID, {$set: updatedProduct})
+    .then(() => {
+        console.log({
+            message: "Comment Add Successfully"
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: "An Error Occured"+ error
+        })
+    })
+
+    })
+    .then(() => {
+        res.json({
+            message: "Comment Add Successfully"
+        })
+    })
+    .catch(err => console.error("Error Ooo! " + err))
+    
+    
+    
+}
 module.exports = {
-    indexProducts, showProduct, updateProduct, deleteProduct, addProduct, searchProducts, myProducts
+    indexProducts, showProduct, updateProduct, deleteProduct, addProduct, searchProducts, myProducts, commenting
 }
 
 // , {productDescription: new RegExp(search, "igm")}

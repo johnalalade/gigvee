@@ -155,7 +155,7 @@ submit = (ev) => {
   data.append('address', this.state.location.address)
   data.append('email', this.state.email)
   data.append('phone', this.state.phone)
-
+ 
   let stock = {
     src: this.state.src,
     owner: this.state.id,
@@ -170,8 +170,7 @@ submit = (ev) => {
     phone: this.state.phone,
     email: this.state.email,
     comments: '',
-    i: this.state.stockImg,
-    
+    i: this.state.stockImg
   }
   
   if(stock.productname.trim() === "" || stock.productDescription.trim() === "" || stock.address == '')

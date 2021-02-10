@@ -13,7 +13,7 @@ ProductsRouter.post('/products/showone', authenticate,ProductsController.showPro
 ProductsRouter.post('/products/addone',authenticate, ProductsController.addProduct)
 ProductsRouter.post('/products/updateone', authenticate,ProductsController.updateProduct)
 ProductsRouter.post('/products/deleteone',authenticate, ProductsController.deleteProduct)
-
+ProductsRouter.post('/products/comment',authenticate, ProductsController.commenting)
 
 module.exports = ProductsRouter
 

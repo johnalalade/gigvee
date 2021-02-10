@@ -8,7 +8,7 @@ import './style.css';
 import axios from 'axios';
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import  ScrollToBottom from 'react-scroll-to-bottom';
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faWhatsapp, faGooglePlusG} from '@fortawesome/free-brands-svg-icons';
@@ -141,7 +141,7 @@ const Cards = (prop, {location}) => {
       return
     }
     else {
-      prop.comm(comment, prop.owner)
+      prop.comm(comment, prop.id)
       prop.comments.unshift(comment)
       setComment('')
     }
@@ -169,7 +169,7 @@ const Cards = (prop, {location}) => {
            </div>
            <Moment className="datetime" fromNow>{prop.createdAt}</Moment>
            </div>
-           <img width="100%" src={prop.img} alt="prod" />
+           <img width="100%" src={prop.img} alt="prod" className="product-img"/>
            <div>
            <hr/>
            <p>Description</p>
@@ -183,15 +183,20 @@ const Cards = (prop, {location}) => {
            
             </div>
             <p>Comments</p>
-            {prop.comments[0] && prop.comments.slice(0,5).map(comment =>
+            {prop.comments[0] && prop.comments.slice(0,5).reverse().map(comment =>
+            
             <div>
-              <p className="comment">{comment}</p>
-              </div>
+              
+            <p className="comment">{comment}</p>
+           
+            </div>
+            
+           
               )
-            || "No comments on this store yet"}
+            || "No comments on this product yet"}
         
         <div className="commenting">
-          <textarea type="text" name="comment" placeholder="comment on this store..." onChange={
+          <textarea type="text" name="comment" placeholder="comment on this product..." onChange={
             (ev) => {
               let comment = ev.target.value;
               setComment(comment);
@@ -247,17 +252,17 @@ distancer = (c) => {
   return c.distance
  }
 
- commentFixer = (d) => {
-  axios.post('/store/showone', { token: this.state.token, storeID: d.owner })
-    .then(data => {
-      d.comments = data.data.response.comments
-      return d.comments
-    })
-    .catch(err => {
-      d.comments = ['No comments on this store']
-      return
-    })
-}
+//  commentFixer = (d) => {
+//   axios.post('/store/showone', { token: this.state.token, storeID: d.owner })
+//     .then(data => {
+//       d.comments = [...data.data.response.comments]
+//       return d
+//     })
+//     .catch(err => {
+//       d.comments = ['No comments on this store']
+//       return d
+//     })
+// }
 
   componentDidMount(){
     if(!localStorage.getItem('token')){
@@ -272,10 +277,10 @@ distancer = (c) => {
     .then((data) => {
       this.distancer(data.data.response)
       return data.data.response})
-      .then(info => {
-        this.commentFixer(info)
-        return info
-      })
+      // .then(info => {
+      //   this.commentFixer(info)
+      //   return info
+      // })
     .then(data => {this.setState({product: data})})
     // .then(res => console.log(this.state.product))
     .catch(err => {toast.error("Couldn't Get Data, Please Try Again."+ err)})
@@ -365,13 +370,13 @@ handleLocationError(error) {
     
     
     // comments
-    const comm = (comment, owner) => {
+    const comm = (comment, id) => {
       let comm = {
         token: this.state.token,
-        storeID: owner,
+        productID: id,
         comment: comment
       }
-      axios.post('/store/comment', comm)
+      axios.post('/products/comment', comm)
         .then(() => toast.success("Comment added"))
         .catch((err) => toast.error("Comment error " + err))
     }
@@ -412,7 +417,7 @@ handleLocationError(error) {
                           *Description:* ${this.state.product.productDescription}
                           `}
                           comments={this.state.product.comments} 
-                          id={this.state.product.id} 
+                          id={this.state.product._id} 
                          lat2={this.state.product.location.latitude}
                          lng2={this.state.product.location.longitude}
                          address={this.state.product.location.address}
