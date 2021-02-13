@@ -1,6 +1,7 @@
 const Products = require('../Models/ProductsModel');
 const fs = require('fs');
 const aws = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
 
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'us-east-2'
@@ -81,7 +82,7 @@ const showProduct = (req, res, next) => {
 
 // add product
 const addProduct = (req, res, next) => {
-    let store = new Products({
+    let store = {
         owner: req.body.owner,
         storename: req.body.storename,
         productName: req.body.productname,
@@ -93,11 +94,11 @@ const addProduct = (req, res, next) => {
         phone: req.body.phone,
         email: req.body.email, 
         distance: '',
-        src: req.body.src,
-        comments: []
+        comments: [],
+        src: `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
 
-    })
-    // if(req.files) {
+    }
+ {   // if(req.files) {
     //     let path = ''
     //     req.files.forEach(function(files,index,arr){
     //         path = path + files.path + ','
@@ -111,10 +112,37 @@ const addProduct = (req, res, next) => {
 //   if(req.body.filename){
 //       store.filename = req.body.filename 
 //   }
-    if(req.body.comment){
-        store.comments = store.comments.unShift(req.body.comment)
+    // if(req.body.comment){
+    //     store.comments = store.comments.unShift(req.body.comment)
+    // }
+ }
+    if(req.file){
+        fs.readFile(req.file.path, (err,data)=> {
+            if(err) throw err;
+            const s3 = new aws.S3();
+            const s3Params = {
+                Bucket: S3_BUCKET,
+                Key: store.src.slice(42),
+                Body: data,
+                // Expires: 180,
+                ContentType: req.file.mimetype,
+                ACL: 'public-read'
+              };
+             // console.log(data)
+              s3.putObject(s3Params, function (s3Err,data) {
+                if(s3Err) throw s3Err
+                
+                console.log('File uploaded successfully at --> '+ data.Location)
+                fs.unlink(req.file.path, (err)=> {
+                    if(err) console.log('Unable to delete used file '+ err)
+                    else console.log('file deleted')
+                })
+              })
+              
+        })
     }
-    store.save()
+    let product = new Products(store)
+    product.save()
     .then(response => {
         res.json({
             message: "product Added Succecfully"
@@ -191,7 +219,7 @@ const deleteProduct = (req, res, next) => {
     .then((response) => {
 
         const s3 = new aws.S3();
-        const imgName = response.src.slice(32)
+        const imgName = response.src.slice(42)
         const s3Params = {
             Bucket: S3_BUCKET,
             Key: imgName,

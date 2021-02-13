@@ -1,6 +1,7 @@
 const StoreProfile = require('../Models/StoreModel');
 const fs = require('fs');
 const aws = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
 
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'us-east-2'
@@ -59,7 +60,7 @@ const showStore = (req, res, next) => {
 // add store
 
 const addStore = (req, res, next) => {
-    let store = new StoreProfile({
+    let store = {
         _id: req.body.storeID,
         storename: req.body.storename,
         storeType: req.body.storetype,
@@ -71,11 +72,36 @@ const addStore = (req, res, next) => {
         phone: req.body.phone,
         sub: 2,
         subDate: Date.now(),
-        src: req.body.src,
-        comments: []
-    })
-   
-    store.save()
+        comments: [],
+        src: `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
+    }
+    if(req.file){
+        fs.readFile(req.file.path, (err,data)=> {
+            if(err) throw err;
+            const s3 = new aws.S3();
+            const s3Params = {
+                Bucket: S3_BUCKET,
+                Key: store.src.slice(42),
+                Body: data,
+                // Expires: 180,
+                ContentType: req.file.mimetype,
+                ACL: 'public-read'
+              };
+              s3.putObject(s3Params, function (s3Err,data) {
+                if(s3Err) throw s3Err
+                
+                console.log('File uploaded successfully at --> '+ data.Location)
+                fs.unlink(req.file.path, (err)=> {
+                    if(err) console.log('Unable to delete used file '+ err)
+                    else console.log('file deleted')
+                })
+              })
+              
+        })
+    }
+
+    let newStore = new StoreProfile(store)
+    newStore.save()
     .then(response => {
         
         res.json({
@@ -127,8 +153,31 @@ const updateStore = (req, res, next) => {
                    address: req.body.address},
         email: req.body.email,
         phone: req.body.phone,
-        src: req.body.src
-        
+        src: `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
+    }
+    if(req.file){
+        fs.readFile(req.file.path, (err,data)=> {
+            if(err) throw err;
+            const s3 = new aws.S3();
+            const s3Params = {
+                Bucket: S3_BUCKET,
+                Key: updatedStore.src.slice(42),
+                Body: data,
+                // Expires: 180,
+                ContentType: req.file.mimetype,
+                ACL: 'public-read'
+              };
+              s3.putObject(s3Params, function (s3Err,data) {
+                if(s3Err) throw s3Err
+               
+                console.log('File uploaded successfully at --> '+ data.Location)
+                fs.unlink(req.file.path, (err)=> {
+                    if(err) console.log('Unable to delete used file '+ err)
+                    else console.log('file deleted')
+                })
+              })
+              
+        })
     }
     StoreProfile.findById(storeID)
     .then((data) => {
@@ -136,7 +185,7 @@ const updateStore = (req, res, next) => {
         if(data.src){  
                 console.log(req.body.checkerImage)
         const s3 = new aws.S3();
-        const imgName = data.src.slice(32)
+        const imgName = data.src.slice(42)
         const s3Params = {
             Bucket: S3_BUCKET,
             Key: imgName,

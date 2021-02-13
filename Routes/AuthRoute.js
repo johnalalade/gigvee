@@ -11,7 +11,7 @@ auther.post('/register', AuthController.register)
 auther.post('/login', AuthController.login)
 auther.get('/profiles', authenticate, AuthController.indexProfile)
 auther.post('/profiles/showone', authenticate,AuthController.showOne)
-auther.post('/profiles/updateone', authenticate, AuthController.updateProfile)
+auther.post('/profiles/updateone',uploadMulter, authenticate, AuthController.updateProfile)
 auther.post('/profiles/storeone', authenticate, AuthController.storeProfile)
 
 module.exports = auther

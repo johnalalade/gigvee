@@ -10,8 +10,8 @@ ProductsRouter.post('/products/search', authenticate, ProductsController.searchP
 ProductsRouter.post('/products/myproducts', authenticate,ProductsController.myProducts)
 ProductsRouter.post('/products', authenticate, ProductsController.indexProducts)
 ProductsRouter.post('/products/showone', authenticate,ProductsController.showProduct)
-ProductsRouter.post('/products/addone',authenticate, ProductsController.addProduct)
-ProductsRouter.post('/products/updateone', authenticate,ProductsController.updateProduct)
+ProductsRouter.post('/products/addone',uploadMulter,authenticate, ProductsController.addProduct)
+ProductsRouter.post('/products/updateone',uploadMulter, authenticate,ProductsController.updateProduct)
 ProductsRouter.post('/products/deleteone',authenticate, ProductsController.deleteProduct)
 ProductsRouter.post('/products/comment',authenticate, ProductsController.commenting)
 

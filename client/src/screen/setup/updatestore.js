@@ -107,40 +107,45 @@ filer = (ev) => {
   this.setState({
     checkerImg: "loading"
   })
-  toast.info("Loading,please wait for preview before clicking 'Update' button...")
+  // toast.info("Loading,please wait for preview before clicking 'Update' button...")
   let file = ev.target.files[0]
   if(file.size > 5000 * 5000 * 5) {
     this.setState({err: "Image Size Too Large"})
   } else{
     this.setState({
-      img: ev.target.files[0]
+      img: ev.target.files[0],
+      src: window.URL.createObjectURL(ev.target.files[0]),
+      checkerImage: true
     })
     this.setState({checker: true})
-   setTimeout(() => {
-    const uploadFile = (file, signedRequest, url) => {
-      axios.put(signedRequest, file, {
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded2: (ProgressEvent.loaded / ProgressEvent.total*100),
-          })
-        }
-      })
-      .then(() => this.setState({
-        src: url,
-        checkerImg: true,
-        checkerImage: true
-      }))
-      .catch(() => toast.error('could not upload image, please try again'))
+ {  
+  //   setTimeout(() => {
+  //   const uploadFile = (file, signedRequest, url) => {
+  //     axios.put(signedRequest, file, {
+  //       onUploadProgress: ProgressEvent => {
+  //         this.setState({
+  //           loaded2: (ProgressEvent.loaded / ProgressEvent.total*100),
+  //         })
+  //       }
+  //     })
+  //     .then(() => this.setState({
+  //       src: url,
+  //       checkerImg: true,
+  //       checkerImage: true
+  //     }))
+  //     .catch(() => toast.error('could not upload image, please try again'))
       
-    }
-    axios.post(`/sign-s3?file-name=${this.state.img.name}&file-type=${this.state.img.type}`)
-  .then((res) => {
-   // console.log(res)
-    const response = res.data
-  uploadFile(this.state.img, response.signedRequest, response.url);
-  })
-   }, 100)
+  //   }
+  //   axios.post(`/sign-s3?file-name=${this.state.img.name}&file-type=${this.state.img.type}`)
+  // .then((res) => {
+  //  // console.log(res)
+  //   const response = res.data
+  // uploadFile(this.state.img, response.signedRequest, response.url);
+  // })
+  //  }, 100)
+  // }
   }
+}
 }
 
 click = (ev) => {
@@ -150,10 +155,10 @@ submit = (ev) => {
   ev.preventDefault();
   toast.success('Loading,  please wait');
   let data = new FormData()
-  // if(this.state.img){
-  //   data.append('categoryImage', this.state.img)
-  //   data.append('filename', this.state.img.name)
-  // }
+  if(this.state.img){
+    data.append('categoryImage', this.state.img)
+    data.append('filename', this.state.img.name)
+  }
   data.append('src', this.state.src)
   data.append('storeID', this.state.id)
   data.append('storename', this.state.storeName)
@@ -164,6 +169,8 @@ submit = (ev) => {
   data.append('address', this.state.location.address)
   data.append('email', this.state.email)
   data.append('phone', this.state.phone)
+  data.append('token', this.state.token)
+  data.append('checkerImage', this.state.checkerImage)
   
 
   let store = {
@@ -193,7 +200,7 @@ submit = (ev) => {
     
      
   
-    axios.post('/store/updateone', store, {
+    axios.post('/store/updateone', data, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
@@ -295,8 +302,8 @@ reverseGeocodeCoordinates(position) {
                   {this.state.checkerImg && <img src={this.state.src} className="setupimg" /> || this.state.checkerImg === null && <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon> || this.state.checkerImg === "loading" && <div className="spin">  <Spinner color="primary" className="spinner" size="sm"/> </div>  }
                   </div>
                   
-                  <br/>
-                  <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress>
+                  {/* <br/>
+                  <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress> */}
                   
                   <br/>
                   <br/>
