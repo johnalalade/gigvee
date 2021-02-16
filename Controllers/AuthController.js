@@ -139,7 +139,7 @@ const storeProfile = (req, res, next) => {
     })
 }
 
-const updateProfile = async (req, res, next) => {
+const updateProfile = (req, res, next) => {
 
     let userID = req.body.userID
 

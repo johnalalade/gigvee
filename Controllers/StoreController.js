@@ -59,7 +59,7 @@ const showStore = (req, res, next) => {
 
 // add store
 
-const addStore = async (req, res, next) => {
+const addStore = (req, res, next) => {
     let store = {
         _id: req.body.storeID,
         storename: req.body.storename,
@@ -140,7 +140,7 @@ const dateStore = (req, res, next) => {
 }
 
 // update store
-const updateStore = async (req, res, next) => {
+const updateStore = (req, res, next) => {
     
     let storeID = req.body.storeID
 

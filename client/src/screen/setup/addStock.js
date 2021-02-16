@@ -200,7 +200,7 @@ submit = (ev) => {
     })
     .then((res) => {
       if(res.data.error){
-        toast.error('Store creation failed, please try again')
+        toast.error('Product creation failed, please try again')
            return
          };
       toast.success('Product Add Successfully')})

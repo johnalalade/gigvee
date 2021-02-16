@@ -81,7 +81,7 @@ const showProduct = (req, res, next) => {
 }
 
 // add product
-const addProduct = async (req, res, next) => {
+const addProduct = (req, res, next) => {
     let store = {
         owner: req.body.owner,
         storename: req.body.storename,
@@ -134,7 +134,7 @@ const addProduct = async (req, res, next) => {
                 
                 console.log('File uploaded successfully at --> '+ data.Location)
                 fs.unlink(req.file.path, (err)=> {
-                    if(err) console.log('Unable to delete used file '+ err)
+                    if(err) res.send({message:'Unable to delete used file '+ err})
                     else console.log('file deleted')
                 })
               })
