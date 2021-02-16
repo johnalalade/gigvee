@@ -124,7 +124,7 @@ const dateStore = (req, res, next) => {
         sub: 2,
         subDate: req.body.subDate
     }
-
+ 
     StoreProfile.findByIdAndUpdate(storeID, {$set: updatedStore})
     .then(() => {
         res.json({
