@@ -303,15 +303,18 @@ reverseGeocodeCoordinates(position) {
               <br/><br/>
 
              <div>
+             <div class="icons">
                 <h1>Open A Store</h1>
+                
                 <FontAwesomeIcon icon={faStore} size='lg'></FontAwesomeIcon>
-
+                </div>
               <Form onSubmit={this.submit}>
-              <label><h6>Logo</h6></label>
               <br/>
-             
+              <label><h6>Logo</h6></label>
 
-              <input type='file' onChange={this.filer} accept="image/*" /> 
+              <input type='file' className="form-control" onChange={this.filer} accept="image/*" /> 
+
+              <br/>
 
               <div className="img-card">
                   <h6>Preview</h6>
@@ -321,7 +324,7 @@ reverseGeocodeCoordinates(position) {
                  {/* <br/>
                   <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress> */}
 
-                  <br/>
+                  {/* <br/> */}
                   <br/>
               <h3 className="err">{this.state.err}</h3>
                 <label><h6>Store Name</h6></label>

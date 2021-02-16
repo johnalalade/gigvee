@@ -238,14 +238,20 @@ render() {
                 <div>
                   <br/><br/>
                   <br/><br/>
+                  <div class="icons">
               <h1>Update Your Profile</h1>
+             
               <FontAwesomeIcon icon={faUser} size='lg'></FontAwesomeIcon>
+              </div>
+
               <Form onSubmit={this.submit}>
               <br/>
                 {/* <img  */}
                 <label><h6>Profile Picture</h6></label>
                 
-                  <input type='file' onChange={this.filer} accept="image/*" />
+                  <input type='file' className="form-control" onChange={this.filer} accept="image/*" />
+
+                  <br/>
 
                   <div className="img-card">
                   <h6>Preview</h6>
@@ -253,8 +259,7 @@ render() {
                   </div>
                   {/* <br/> */}
                   {/* <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress> */}
-
-                  <br/>
+                  {/* <br/> */}
                   <br/>
                 <label for="username"><h6> Enter First Name.</h6></label>
                   <input type="name" name="firstname" onChange={this.userN} value={this.state.firstName} className="form-control" />

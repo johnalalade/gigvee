@@ -81,7 +81,7 @@ const showProduct = (req, res, next) => {
 }
 
 // add product
-const addProduct = (req, res, next) => {
+const addProduct = async (req, res, next) => {
     let store = {
         owner: req.body.owner,
         storename: req.body.storename,

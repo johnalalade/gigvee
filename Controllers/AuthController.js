@@ -126,9 +126,6 @@ const storeProfile = (req, res, next) => {
         bookmarks: bookmarks.unShift(req.body.bookmark),
         notifications: notifications.unShift(req.body.notifications)
     })
-    if(req.file){
-        user.avatar = req.file.path
-    }
     user.save()
     .then(response => {
         res.json({
@@ -142,7 +139,7 @@ const storeProfile = (req, res, next) => {
     })
 }
 
-const updateProfile = (req, res, next) => {
+const updateProfile = async (req, res, next) => {
 
     let userID = req.body.userID
 
@@ -152,9 +149,10 @@ const updateProfile = (req, res, next) => {
         lastname: req.body.lastname,
         email: req.body.email,
         phone: req.body.phone,
-        src: `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
     }
     if(req.file){
+        updatedProfile.src = `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
+
         fs.readFile(req.file.path, (err,data)=> {
             if(err) throw err;
             const s3 = new aws.S3();
@@ -181,9 +179,9 @@ const updateProfile = (req, res, next) => {
     }
     Login.findById(userID)
     .then((data) => {
-        if(req.body.checkerImage === true){
+        if(req.body.checkerImage){
         if(data.src){  
-                console.log(req.body.checkerImage)
+                console.log(data.src)
         const s3 = new aws.S3();
         const imgName = data.src.slice(42)
         const s3Params = {

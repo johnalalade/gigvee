@@ -59,7 +59,7 @@ const showStore = (req, res, next) => {
 
 // add store
 
-const addStore = (req, res, next) => {
+const addStore = async (req, res, next) => {
     let store = {
         _id: req.body.storeID,
         storename: req.body.storename,
@@ -73,9 +73,10 @@ const addStore = (req, res, next) => {
         sub: 2,
         subDate: Date.now(),
         comments: [],
-        src: `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
     }
     if(req.file){
+        store.src= `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
+        
         fs.readFile(req.file.path, (err,data)=> {
             if(err) throw err;
             const s3 = new aws.S3();
@@ -139,8 +140,8 @@ const dateStore = (req, res, next) => {
 }
 
 // update store
-const updateStore = (req, res, next) => {
-
+const updateStore = async (req, res, next) => {
+    
     let storeID = req.body.storeID
 
     let updatedStore = {
@@ -153,9 +154,10 @@ const updateStore = (req, res, next) => {
                    address: req.body.address},
         email: req.body.email,
         phone: req.body.phone,
-        src: `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
     }
     if(req.file){
+        updatedStore.src = `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
+
         fs.readFile(req.file.path, (err,data)=> {
             if(err) throw err;
             const s3 = new aws.S3();
@@ -179,11 +181,11 @@ const updateStore = (req, res, next) => {
               
         })
     }
-    StoreProfile.findById(storeID)
+   StoreProfile.findById(storeID)
     .then((data) => {
-        if(req.body.checkerImage === true){
+        if(req.body.checkerImage){
         if(data.src){  
-                console.log(req.body.checkerImage)
+         console.log(data.src)       
         const s3 = new aws.S3();
         const imgName = data.src.slice(42)
         const s3Params = {
@@ -194,7 +196,7 @@ const updateStore = (req, res, next) => {
             // ACL: 'public-read'
           };
           
-            s3.deleteObject(s3Params, function(err, data) {
+           s3.deleteObject(s3Params, function(err, data) {
                 if(err) console.log("image deletion failed"+err, err.stack)
                 else console.log("image deleted") 
             })

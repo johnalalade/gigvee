@@ -122,6 +122,12 @@
     flex-direction: row;
     justify-content: center;
 }
+.icons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 /* add stock */
 .addstock-div {
     background-color: rgba(255, 69, 0, 0.5);

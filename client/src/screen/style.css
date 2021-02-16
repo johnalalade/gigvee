@@ -176,9 +176,9 @@
     background-color: white;
     padding: 10px;
 }
-.product-img{
+/* .product-img{
     max-height: 300px;
-}
+} */
 .commenting{ 
     display: flex;
 }

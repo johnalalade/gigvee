@@ -276,15 +276,20 @@ render() {
           <br/> <br/>
           <br/>
           {this.state.storename && <div>
+            <div class="icons">
           <h1>Add Product</h1>
-          <FontAwesomeIcon icon={faGift} size='lg'></FontAwesomeIcon>
           
+          <FontAwesomeIcon icon={faGift} size='lg'></FontAwesomeIcon>
+          </div>
+
         <Form onSubmit={this.submit}>
         <h3 className="err">{this.state.err}</h3>
         <label><h6>Image</h6></label>
-        <br/>
+        
        
-        <input type='file' onChange={this.filer} accept="image/*" />
+        <input type='file' className="form-control" onChange={this.filer} accept="image/*" />
+
+        <br/>
                   
         <div className="img-card">
                   <h6>Preview</h6>
@@ -294,9 +299,8 @@ render() {
               {/* <br/> */}
                   {/* <Progress max="100" color="success" value={this.state.loaded2}>{Math.round(this.state.loaded2,2)}%</Progress> */}
 
+                  {/* <br/> */}
                   <br/>
-                  <br/>
-        <br/>
                 <label><h6>Product Name</h6></label>
                   <input type="name" name="stockName" placeholder="Classical Guitar..." onChange={this.storeN} value={this.state.stockName} className="form-control" />
         <br/>
