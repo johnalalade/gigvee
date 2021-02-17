@@ -173,7 +173,7 @@ class MyStoreDis extends Component {
           <br />
 
           <h6>Your  Products: </h6>
-          <p>Products will be deleted after 30 days</p>
+          <p>Products will be deleted after 10 days</p>
           {this.state.products &&
             this.state.products.map((product) =>
               <Cards key={product._id} createdAt={product.createdAt} storeName={product.storename} productName={product.productName} img={product.src} productDescription={product.productDescription} deta={deta} id={product._id} comments={product.comments}/>
