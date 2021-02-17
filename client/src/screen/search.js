@@ -67,7 +67,7 @@ const Cards = (prop) => {
             <hr/>
               <a className="btn btn-primary form-control" onClick={det}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Visit</a>
            </div>
-           <p>Comments</p>
+           <p>Comments({prop.comments.length})</p>
         <p className="comment">{prop.comments[0] && prop.comments[0] || "No comment on this product yet"}</p>
         <div className="commenting">
           <textarea type="text" name="comment" placeholder="comment on this product..." onChange={

@@ -182,7 +182,7 @@ const Cards = (prop, {location}) => {
             <hr/>
            
             </div>
-            <p>Comments</p>
+            <p>Comments({prop.comments.length})</p>
             {prop.comments[0] && prop.comments.slice(0,5).reverse().map(comment =>
             
             <div>
