@@ -7,7 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-
+var date = new Date()
+date.getFullYear()
+var year = date.toString()
 class Logins extends Component {
   constructor() {
     super();
@@ -97,7 +99,7 @@ class Logins extends Component {
           </Row>
         </div>
         <div className="bottom">
-          <p align="center"> GigVee Team &#169; {year.slice(10, 15)}</p>
+          <p align="center"><b>GigVee Team &#169; {year.slice(10, 15)}</b></p>
         </div>
       </div>
     );

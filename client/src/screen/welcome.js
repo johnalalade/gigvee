@@ -191,7 +191,7 @@ class Welcome extends Component {
                     </div>
                 </div>
                 <div className="bottom">
-                    <p align="center"> GigVee Team &#169; {year.slice(10, 15)}</p>
+                    <p align="center"> <b>GigVee Team &#169; {year.slice(10, 15)}</b></p>
                 </div>
             </div>
         );
