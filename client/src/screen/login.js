@@ -96,6 +96,9 @@ class Logins extends Component {
             </Col>
           </Row>
         </div>
+        <div className="bottom">
+          <p align="center"> GigVee Team &#169; {year.slice(10, 15)}</p>
+        </div>
       </div>
     );
   }
