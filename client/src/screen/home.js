@@ -38,7 +38,8 @@ const Cards = (prop) => {
     <div>
 
       <div className="card-bg">
-        <br />
+        {/* <br /> */}
+        {/* <hr /> */}
         <div className="c-top">
           <div>
             <h6>Store: {prop.storeName}</h6>
@@ -46,6 +47,7 @@ const Cards = (prop) => {
           </div>
           <Moment className="datetime" fromNow>{prop.createdAt}</Moment>
         </div>
+        <hr />
         <img width="100%" src={prop.img} alt="prod" className="product-img"/>
         <div>
           <hr />
