@@ -158,6 +158,10 @@ class MyStoreDis extends Component {
               <h5 className="card-list" > {this.state.store.storename}</h5>
 
               <h6 className="card-list">Address: {this.state.address}</h6>
+
+              <h6 className="card-list">Phone: {this.state.store.phone}</h6>
+
+              <h6 className="card-list">Email: {this.state.store.email}</h6>
               <br />
               <a className="btn btn-primary" onClick={() =>
                 window.location = `/updatestore?gigvee=true&product=1`} >Update</a>

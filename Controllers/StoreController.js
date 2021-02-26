@@ -219,7 +219,7 @@ const updateStore = (req, res, next) => {
         from: 'gigveeteam@gmail.com',
         to: req.body.email,
         subject: 'GigVee Store Update',
-        html: `<h1> <strong>GigVee Store Update</strong> </h1>  <p>Hey! We are glad to inform you that you have successfully updated your store ${req.body.storename} on Gigvee.</p> <p>Changes made have been recorded and will reflect on any new post you make .</p> <p>Here are  some useful tips you should try out</p> <ul> <li>As products will be deleted after 10 days, try posting a product every week</li> <li>Update your store only when neccesary</li> <li>Make sure your contact information are correct</li> <li>Be available to accept orders</li> </ul> <p>Kind regards..</p><quote>~John Alalade (Team Leader)</quote>`
+        html: `<h1> <strong>GigVee Store Update</strong> </h1>  <p>Hey! We are glad to inform you that you have successfully updated your store "${req.body.storename}" on Gigvee.</p> <p>Changes made have been recorded and will reflect on any new post you make .</p> <p>Here are  some useful tips you should try out</p> <ul> <li>As products will be deleted after 10 days, try posting a product every week</li> <li>Update your store only when neccesary</li> <li>Make sure your contact information are correct</li> <li>Be available to accept orders</li> </ul> <p>Kind regards..</p><quote>~John Alalade (Team Leader)</quote>`
     };
 
     transporter.sendMail(mailOptions, function(error, info){
