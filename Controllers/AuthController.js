@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const aws = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
+const nodemailer = require('nodemailer')
 
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'us-east-2'
@@ -14,27 +15,27 @@ require('dotenv').config();
 // show list of all available User
 const indexProfile = (req, res, next) => {
     Login.find()
-    .then(response => {
-        res.josn({
-            response
+        .then(response => {
+            res.josn({
+                response
+            })
         })
-    })
-    .catch(error => {
-        res.json({
-            message: "An error occured"
+        .catch(error => {
+            res.json({
+                message: "An error occured"
+            })
         })
-    })
 }
 
 const register = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10, function(err, hashedPass) {
-        if(err) {
+    bcrypt.hash(req.body.password, 10, function (err, hashedPass) {
+        if (err) {
             res.json({
                 error: err
             })
         }
 
-        let login = new Login ({
+        let login = new Login({
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             email: req.body.email,
@@ -42,74 +43,97 @@ const register = (req, res, next) => {
             password: hashedPass
         })
         login.save()
-        .then(user => {
-            
-            res.json({
-                message: "Login Successful",
-                id: user._id
+            .then(user => {
+
+                res.json({
+                    message: "Login Successful",
+                    id: user._id
+                })
+                //email
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'gigveeteam@gmail.com',
+                        pass: 'JohnAlalade@4444'
+                    }
+                });
+
+                var mailOptions = {
+                    from: 'gigveeteam@gmail.com',
+                    to: req.body.email,
+                    subject: 'Welcome To GigVee',
+                    html: `<h1> <strong>Welcome To GigVee</strong> </h1> <br/> <p>Hello ${req.body.firstname},</p> <p>We are glad to have you here at Gigvee! Now you can start buying,recruiting people,getting deals etc. from people all around the world, you can also become a vendor by opening up a store</p> <p>We are pleased to have you here! And we hope you enjoy your journey into a better Business Experience.</p> <p>Kind regards..</p> <quote>~John Alalade (Team Leader)</quote>`
+                };
+
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log("Emailimg error: "+error);
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                    }
+                  });
             })
-        })
-        .catch(error => {
-            res.json({
-                message: "An Error Occured!"
+            .catch(error => {
+                res.json({
+                    message: "An Error Occured!"
+                })
             })
-        })
     })
 
-    
+
 }
 
-const login = (req, res, next)=> {
+const login = (req, res, next) => {
     var userName = req.body.userName
     var password = req.body.password
 
-    Login.findOne({$or: [{email:userName}, {phone:userName}]})
-    .then(user => {
-    
-        if(user){
-            bcrypt.compare(password, user.password, function(err, result) {
-                if(err) {
-                    res.json({
-                        error: err
-                    })
-                }
-                if(result) {
-                    let token = jwt.sign({name: user.name},"Iyaaduke+5")
-                    // console.log(user)
-                    res.json({
-                        message: "Login Succesful",
-                        token,
-                        id: user._id
-                    })
-                }else{
-                    res.json({
-                        message: "Password Does Not Match!"
-                    })
-                }
-            })
-        }else{
-            res.json({
-                message: "No User Found"
-            })
-        }
-    })
+    Login.findOne({ $or: [{ email: userName }, { phone: userName }] })
+        .then(user => {
+
+            if (user) {
+                bcrypt.compare(password, user.password, function (err, result) {
+                    if (err) {
+                        res.json({
+                            error: err
+                        })
+                    }
+                    if (result) {
+                        let token = jwt.sign({ name: user.name }, "Iyaaduke+5")
+                        // console.log(user)
+                        res.json({
+                            message: "Login Succesful",
+                            token,
+                            id: user._id
+                        })
+                    } else {
+                        res.json({
+                            message: "Password Does Not Match!"
+                        })
+                    }
+                })
+            } else {
+                res.json({
+                    message: "No User Found"
+                })
+            }
+        })
 }
 
 // show one 
 const showOne = (req, res, next) => {
-    let userID = req.body.userID 
+    let userID = req.body.userID
     Login.findById(userID)
-    .then(response => {
-        res.json({
-            response
+        .then(response => {
+            res.json({
+                response
+            })
         })
-    })
-    .catch(error => {
-        res.json({
-            error,
-            message: "Can't Find User"
+        .catch(error => {
+            res.json({
+                error,
+                message: "Can't Find User"
+            })
         })
-    })
 
 }
 
@@ -127,34 +151,34 @@ const storeProfile = (req, res, next) => {
         notifications: notifications.unShift(req.body.notifications)
     })
     user.save()
-    .then(response => {
-        res.json({
-            message: "User Profile Added Succecfully"
+        .then(response => {
+            res.json({
+                message: "User Profile Added Succecfully"
+            })
         })
-    })
-    .catch(error => {
-        res.json({
-            message: "An Error Occured"
+        .catch(error => {
+            res.json({
+                message: "An Error Occured"
+            })
         })
-    })
 }
 
 const updateProfile = (req, res, next) => {
 
     let userID = req.body.userID
 
-    let updatedProfile = { 
+    let updatedProfile = {
         bookmarks: [],
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         phone: req.body.phone,
     }
-    if(req.file){
-        updatedProfile.src = `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4()+req.body.filename.trim()}`
+    if (req.file) {
+        updatedProfile.src = `https://gigvee.s3.us-east-2.amazonaws.com/${uuidv4() + req.body.filename.trim()}`
 
-        fs.readFile(req.file.path, (err,data)=> {
-            if(err) throw err;
+        fs.readFile(req.file.path, (err, data) => {
+            if (err) throw err;
             const s3 = new aws.S3();
             const s3Params = {
                 Bucket: S3_BUCKET,
@@ -163,63 +187,63 @@ const updateProfile = (req, res, next) => {
                 // Expires: 180,
                 ContentType: req.file.mimetype,
                 ACL: 'public-read'
-              };
-              s3.putObject(s3Params, function (s3Err,data) {
-                if(s3Err) throw s3Err
-                
-                console.log('File uploaded successfully at --> '+ data.Location)
-                fs.unlink(req.file.path, (err)=> {
-                    if(err) console.log('Unable to delete used file '+ err)
+            };
+            s3.putObject(s3Params, function (s3Err, data) {
+                if (s3Err) throw s3Err
+
+                console.log('File uploaded successfully at --> ' + data.Location)
+                fs.unlink(req.file.path, (err) => {
+                    if (err) console.log('Unable to delete used file ' + err)
                     else console.log('file deleted')
                 })
-                
-              })
-              
+
+            })
+
         })
     }
     Login.findById(userID)
-    .then((data) => {
-        if(req.body.checkerImage){
-        if(data.src){  
-                console.log(data.src)
-        const s3 = new aws.S3();
-        const imgName = data.src.slice(42)
-        const s3Params = {
-            Bucket: S3_BUCKET,
-            Key: imgName,
-            // Expires: 180,
-            // ContentType: fileType,
-            // ACL: 'public-read'
-          };
-          
-            s3.deleteObject(s3Params, function(err, data) {
-                if(err) console.log("image deletion failed"+err, err.stack)
-                else console.log("image deleted") 
-            })
-        }
-          }
-          else{return}
-         
-    })
-    .then(() => {
-        Login.findByIdAndUpdate(userID, {$set: updatedProfile})
+        .then((data) => {
+            if (req.body.checkerImage) {
+                if (data.src) {
+                    console.log(data.src)
+                    const s3 = new aws.S3();
+                    const imgName = data.src.slice(42)
+                    const s3Params = {
+                        Bucket: S3_BUCKET,
+                        Key: imgName,
+                        // Expires: 180,
+                        // ContentType: fileType,
+                        // ACL: 'public-read'
+                    };
+
+                    s3.deleteObject(s3Params, function (err, data) {
+                        if (err) console.log("image deletion failed" + err, err.stack)
+                        else console.log("image deleted")
+                    })
+                }
+            }
+            else { return }
+
+        })
         .then(() => {
-            res.json({
-                message: "Profile Updated Successfully"
-            })
+            Login.findByIdAndUpdate(userID, { $set: updatedProfile })
+                .then(() => {
+                    res.json({
+                        message: "Profile Updated Successfully"
+                    })
+                })
+                .catch(error => {
+                    res.json({
+                        message: "An Error Occured"
+                    })
+                })
         })
-        .catch(error => {
-            res.json({
-                message: "An Error Occured"
-            })
-        })
-    })
-    .catch((err) => console.log(err))
-   
-     
+        .catch((err) => console.log(err))
+
+
 }
-        
-    
+
+
 
 module.exports = {
     register, login, showOne, storeProfile, updateProfile, indexProfile

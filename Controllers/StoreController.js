@@ -2,6 +2,7 @@ const StoreProfile = require('../Models/StoreModel');
 const fs = require('fs');
 const aws = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
+const nodemailer = require('nodemailer')
 
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'us-east-2'
@@ -101,6 +102,30 @@ const addStore = (req, res, next) => {
         })
     }
 
+    //email
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'gigveeteam@gmail.com',
+            pass: 'JohnAlalade@4444'
+        }
+    });
+
+    var mailOptions = {
+        from: 'gigveeteam@gmail.com',
+        to: req.body.email,
+        subject: 'GigVee Stores',
+        html: `<h1> <strong>GigVee Stores</strong> </h1> <p>Hurray! We are glad to inform you that you have successfully opend a store called "${req.body.storename}" on Gigvee.</p> <p>Congratulations, now you can post anything you do on your store, and other users will be able to see your posts and contact you!.</p> <p>Here are  some useful tips you should try out</p> <ul> <li>As products will be deleted after 10 days, try posting a product every week</li> <li>Update your store only when neccesary</li> <li>Make sure your contact information are correct</li> <li>Be available to accept orders</li> </ul> <p>Kind regards..</p><quote>~John Alalade (Team Leader)</quote>`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log("Emailimg error: "+error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
     let newStore = new StoreProfile(store)
     newStore.save()
     .then(response => {
@@ -181,6 +206,30 @@ const updateStore = (req, res, next) => {
               
         })
     }
+     //email
+     var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'gigveeteam@gmail.com',
+            pass: 'JohnAlalade@4444'
+        }
+    });
+
+    var mailOptions = {
+        from: 'gigveeteam@gmail.com',
+        to: req.body.email,
+        subject: 'GigVee Store Update',
+        html: `<h1> <strong>GigVee Store Update</strong> </h1>  <p>Hey! We are glad to inform you that you have successfully updated your store ${req.body.storename} on Gigvee.</p> <p>Changes made have been recorded and will reflect on any new post you make .</p> <p>Here are  some useful tips you should try out</p> <ul> <li>As products will be deleted after 10 days, try posting a product every week</li> <li>Update your store only when neccesary</li> <li>Make sure your contact information are correct</li> <li>Be available to accept orders</li> </ul> <p>Kind regards..</p><quote>~John Alalade (Team Leader)</quote>`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log("Emailimg error: "+error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
    StoreProfile.findById(storeID)
     .then((data) => {
         if(req.body.checkerImage){

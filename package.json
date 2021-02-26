@@ -26,6 +26,7 @@
     "mongoose": "^5.10.7",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "nodemailer": "^6.4.18",
     "nodemon": "^2.0.4",
     "socket.io": "^2.3.0",
     "uuid": "^8.3.2"
