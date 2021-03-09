@@ -32,7 +32,7 @@ const Cards = (prop) => {
       setComment('')
     }
 
-  }
+  } 
 
   return (
     <div>
