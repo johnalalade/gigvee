@@ -29,7 +29,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
-const key = process.env.REACT_APP_GOOGLE_API_KEY
+const key = process.env.REACT_APP_MAPS_KEY
 class MyStore extends Component {
   constructor(props) {
     super(props);
@@ -281,7 +281,7 @@ handleLocationError(error) {
 }
 
 reverseGeocodeCoordinates(position) {
-  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.location.latitude},${this.state.location.longitude}&sensor=false&key=AIzaSyDSTTGy28qjqJ5woegTBYAroJeL0zE6t4g`)
+  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.location.latitude},${this.state.location.longitude}&sensor=false&key=${process.env.REACT_APP_MAPS_KEY}`)
   .then(result => this.setState({
     location: {
       address: result.data.results[0].formatted_address,

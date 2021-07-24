@@ -18,7 +18,7 @@ import {Spinner} from 'reactstrap';
 
 import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
 
-const key = "AIzaSyDSTTGy28qjqJ5woegTBYAroJeL0zE6t4g"
+const key = process.env.REACT_APP_MAPS_KEY
 const libraries = ["places"];
 const mapContainerStyle = {
     height: "340px", 
@@ -40,7 +40,7 @@ const [info1, setInfo1] = useState(false)
     lng: prop.lng
   }
   const {isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDSTTGy28qjqJ5woegTBYAroJeL0zE6t4g",
+    googleMapsApiKey: process.env.REACT_APP_MAPS_KEY,
     libraries,
   });
   if(loadError) return (<h6 align="center">Error Loading Map, Check your connection</h6>)

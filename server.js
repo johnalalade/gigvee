@@ -61,11 +61,6 @@ app.use('/', productsRoute)
 app.use('/', authRoute)
 
 
-// aws_access_key_id = "AKIA527EVMP3OOUZNUXZ"
-// aws_secret_access_key = "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"
-
-// aws.config.credentials.accessKeyId = 'AKIA527EVMP3OOUZNUXZ'
-
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'us-east-2'
 
